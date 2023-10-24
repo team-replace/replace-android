@@ -6,4 +6,8 @@
     </style>
 
     <style name="Theme.Replace" parent="Base.Theme.Replace" />
+
+    <style name="Theme.Replace.SearchViewTheme">
+        <item name = "colorControlNormal">@color/green_9ECEB4</item>
+    </style>
 </resources>
