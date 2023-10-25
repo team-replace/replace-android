@@ -1,7 +1,10 @@
 package com.app.replace.ui.main
 
+import android.Manifest
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.commit
 import com.app.replace.R
 import com.app.replace.databinding.ActivityMainBinding
@@ -25,9 +28,21 @@ class MainActivity : AppCompatActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
+    private val permissionRequestLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions(),
+    ) { permissions ->
+        permissions.entries.forEach { entry ->
+            val isGranted = entry.value
+            if(!isGranted) {
+                ActivityCompat.requestPermissions(this, PERMISSIONS, LOCATION_PERMISSION_REQUEST_CODE)
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        permissionRequestLauncher.launch(PERMISSIONS)
         initFragmentContainerView()
         setBottomNavigation()
     }
@@ -85,5 +100,12 @@ class MainActivity : AppCompatActivity() {
         private const val FRAGMENT_BOOKMARK = "bookmark"
         private const val FRAGMENT_ALARM = "alarm"
         private const val FRAGMENT_MYPAGE = "mypage"
+
+        const val LOCATION_PERMISSION_REQUEST_CODE = 5000
+
+        private val PERMISSIONS = arrayOf(
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+        )
     }
 }
