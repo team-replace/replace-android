@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/bottom_menu_home"
+        android:icon="@drawable/ic_bottom_navigation_home"
+        android:title="@string/bottom_navigation_home_title" />
+
+    <item
+        android:id="@+id/bottom_menu_diary"
+        android:icon="@drawable/ic_bottom_navigation_diary"
+        android:title="@string/bottom_navigation_diary_title" />
+
+    <item
+        android:id="@+id/bottom_menu_bookmark"
+        android:icon="@drawable/ic_bottom_navigation_bookmark"
+        android:title="@string/bottom_navigation_bookmark_title" />
+
+    <item
+        android:id="@+id/bottom_menu_alarm"
+        android:icon="@drawable/ic_bottom_navigation_alarm"
+        android:title="@string/bottom_navigation_alarm_title" />
+
+
+    <item
+        android:id="@+id/bottom_menu_mypage"
+        android:icon="@drawable/ic_bottom_navigation_mypage"
+        android:title="@string/bottom_navigation_mypage_title" />
+</menu>
