@@ -16,6 +16,9 @@
         android:theme="@style/Theme.Replace"
         tools:targetApi="31">
         <activity
+            android:name=".ui.diarydetail.DiaryDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.diaryeditor.DiaryEditorActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustPan">

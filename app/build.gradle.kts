@@ -52,8 +52,8 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
-    implementation("androidx.fragment:fragment-ktx:1.5.7")
-    implementation("androidx.activity:activity-ktx:1.7.2")
+    implementation("androidx.fragment:fragment-ktx:1.6.1")
+    implementation("androidx.activity:activity-ktx:1.8.0")
 
     // 네이버 map sdk
     implementation("com.naver.maps:map-sdk:3.17.0")
@@ -68,4 +68,7 @@ dependencies {
 
     // fusedLocation
     implementation("com.google.android.gms:play-services-location:21.0.1")
+
+    // glide
+    implementation("com.github.bumptech.glide:glide:4.15.1")
 }
