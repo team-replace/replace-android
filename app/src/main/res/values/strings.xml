@@ -7,6 +7,13 @@
     <string name="bottom_navigation_bookmark_title">북마크</string>
     <string name="bottom_navigation_alarm_title">알림</string>
     <string name="bottom_navigation_mypage_title">마이페이지</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- diary editor activity -->
+    <string name="diary_editor_title_hint">장소에서 기억을 한 문장으로 나타내보세요</string>
+    <string name="diary_editor_image_number">%d/10</string>
+    <string name="diary_editor_content_hint">일기를 작성해보세요</string>
+    <string name="diary_editor_share_diary_title">일기를 공유할 범위를 선택해주세요</string>
+    <string name="diary_editor_share_all">전체 공유</string>
+    <string name="diary_editor_share_us">우리만 공유</string>
+    <string name="diary_editor_diary_save">작성 완료</string>
 </resources>
