@@ -71,4 +71,10 @@ dependencies {
 
     // glide
     implementation("com.github.bumptech.glide:glide:4.15.1")
+
+    // TedImagePicker
+    implementation("io.github.ParkSangGwon:tedimagepicker:1.4.2")
+
+    // by viewModels() 종속성
+    implementation("androidx.activity:activity-ktx:1.7.2")
 }

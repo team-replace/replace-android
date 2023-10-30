@@ -17,4 +17,15 @@ object CustomBindingAdapter {
             .circleCrop()
             .into(view)
     }
+
+    @BindingAdapter("imgUrlCenterCrop")
+    @JvmStatic
+    fun setCenterCropImageResource(view: ImageView, url: String?) {
+        Glide.with(view)
+            .load(url)
+            .placeholder(R.drawable.ic_launcher_background)
+            .error(R.drawable.ic_launcher_background)
+            .centerCrop()
+            .into(view)
+    }
 }
