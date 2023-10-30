@@ -1,6 +1,7 @@
 package com.replace.data.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import com.replace.data.remote.ReplaceCallAdapterFactory
 import com.replace.data.service.client.AccessTokenInterceptor
 import dagger.Module
 import dagger.Provides
@@ -16,7 +17,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object RetrofitModule {
-    private const val BASE_URL = "https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc"
+    private const val BASE_URL = "http://54.153.140.131:8080"
     private val CONTENT_TYPE = "application/json".toMediaType()
 
     @Singleton
@@ -25,6 +26,7 @@ object RetrofitModule {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(Json.asConverterFactory(CONTENT_TYPE))
+            .addCallAdapterFactory(ReplaceCallAdapterFactory())
             .client(okHttpClient)
             .build()
     }
@@ -43,5 +45,4 @@ object RetrofitModule {
                 build()
             }
     }
-
 }
