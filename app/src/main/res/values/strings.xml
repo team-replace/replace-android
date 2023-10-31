@@ -9,6 +9,7 @@
     <string name="bottom_navigation_mypage_title">마이페이지</string>
 
     <!-- diary editor activity -->
+    <string name="diary_editor_title">일기 작성하기</string>
     <string name="diary_editor_title_hint">장소에서 기억을 한 문장으로 나타내보세요</string>
     <string name="diary_editor_image_number">%d/10</string>
     <string name="diary_editor_content_hint">일기를 작성해보세요</string>
@@ -16,4 +17,10 @@
     <string name="diary_editor_share_all">전체 공유</string>
     <string name="diary_editor_share_us">우리만 공유</string>
     <string name="diary_editor_diary_save">작성 완료</string>
+
+    <!-- diary detail activity -->
+    <string name = "diary_detail_toolbar_menu_update">수정</string>
+    <string name = "diary_detail_toolbar_menu_delete">삭제</string>
+    <string name="diary_detail_profile_image_description">프로필 이미지</string>
+    <string name="diary_detail_place_marker_description">장소마커</string>
 </resources>
