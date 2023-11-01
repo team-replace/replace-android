@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.replace.data"
-    compileSdk = 34d
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 28

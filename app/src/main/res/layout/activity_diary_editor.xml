@@ -157,6 +157,7 @@
             app:layout_constraintTop_toBottomOf="@+id/space2" />
 
         <RadioGroup
+            android:id="@+id/rg_share_scope"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
@@ -164,14 +165,17 @@
             app:layout_constraintTop_toBottomOf="@id/tv_share_diary_title">
 
             <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/rb_share_all"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@drawable/selector_share_diary_check"
                 android:padding="10dp"
                 android:text="@string/diary_editor_share_all"
+                android:checked="true"
                 android:textSize="16sp" />
 
             <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/rb_share_us"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
@@ -183,6 +187,7 @@
         </RadioGroup>
 
         <TextView
+            android:id="@+id/tv_save"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/bg_9eceb4_radius_15dp"

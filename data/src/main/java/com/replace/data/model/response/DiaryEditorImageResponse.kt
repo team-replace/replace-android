@@ -1,5 +1,9 @@
 package com.replace.data.model.response
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class DiaryEditorImageResponse(
-    val imageUrls: List<String>,
+    @SerialName("imageUrls") val imageUrls: List<String>,
 )
