@@ -14,7 +14,7 @@ class ReplaceCall<T> constructor(
     private val callDelegate: Call<T>,
 ) : Call<CustomResult<T>> {
     override fun enqueue(callback: Callback<CustomResult<T>>) {
-        callDelegate.enqueue(object : Callback<T> {
+        return callDelegate.enqueue(object : Callback<T> {
             override fun onResponse(call: Call<T>, response: Response<T>) {
                 if (response.isSuccessful) {
                     val locationHeader = response.headers()["Location"]
@@ -72,9 +72,11 @@ class ReplaceCall<T> constructor(
             }
         })
     }
+
     override fun clone(): Call<CustomResult<T>> = ReplaceCall(callDelegate.clone())
     override fun execute(): Response<CustomResult<T>> =
         throw UnsupportedOperationException("ResponseCall does not support execute.")
+
     override fun isExecuted(): Boolean = callDelegate.isExecuted
     override fun cancel() = callDelegate.cancel()
     override fun isCanceled(): Boolean = callDelegate.isCanceled
