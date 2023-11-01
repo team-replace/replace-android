@@ -2,6 +2,8 @@ plugins {
     kotlin("kapt")
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-parcelize")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -44,6 +46,9 @@ android {
 
 dependencies {
 
+    // data module
+    implementation(project(":data"))
+
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")
@@ -77,4 +82,8 @@ dependencies {
 
     // by viewModels() 종속성
     implementation("androidx.activity:activity-ktx:1.7.2")
+
+    // hilt
+    implementation("com.google.dagger:hilt-android:2.48")
+    kapt("com.google.dagger:hilt-android-compiler:2.48")
 }
