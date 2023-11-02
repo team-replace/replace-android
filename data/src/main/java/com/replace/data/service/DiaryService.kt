@@ -19,7 +19,7 @@ interface DiaryService {
     @POST("/diary")
     suspend fun saveDiary(
         @Body diaryEditorRequest: DiaryEditorRequest,
-    ): CustomResult<Long>
+    ): CustomResult<Unit>
 
     @POST("/diary/images")
     @Multipart

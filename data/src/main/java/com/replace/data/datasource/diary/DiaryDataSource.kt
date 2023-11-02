@@ -9,7 +9,7 @@ import java.io.File
 interface DiaryDataSource {
     suspend fun saveDiary(
         diaryEditorRequest: DiaryEditorRequest,
-    ): CustomResult<Long>
+    ): CustomResult<Unit>
 
     suspend fun saveDiaryImages(
         images: List<File>,

@@ -12,7 +12,7 @@ interface DiaryRepository {
         title: String,
         content: String,
         shareScope: String,
-    ): CustomResult<Long>
+    ): CustomResult<Unit>
 
     suspend fun saveDiaryImages(
         images: List<File>,
