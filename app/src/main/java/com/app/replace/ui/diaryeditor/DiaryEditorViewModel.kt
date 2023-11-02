@@ -27,23 +27,27 @@ class DiaryEditorViewModel @Inject constructor(
     private val _galleryImages = MutableLiveData<List<String>>()
     val galleryImages: LiveData<List<String>> get() = _galleryImages
 
+    private val _imageUrls = MutableLiveData<List<String>>()
+
     private val _event: SingleLiveEvent<DiaryEditorEvent> = SingleLiveEvent()
     val event: LiveData<DiaryEditorEvent>
         get() = _event
 
     fun addSelectedImages(image: String) {
         _images.add(image)
+        _galleryImages.value = images.toList()
     }
 
     fun deleteImages(image: String) {
         _images.remove(image)
+        _galleryImages.value = images.toList()
     }
 
     fun saveDiary(title: String, content: String, shareScope: String) {
         viewModelScope.launch {
             when (
                 val response = diaryRepository.saveDiary(
-                    _galleryImages.value ?: emptyList(),
+                    _imageUrls.value ?: emptyList(),
                     title,
                     content,
                     shareScope,
@@ -80,7 +84,7 @@ class DiaryEditorViewModel @Inject constructor(
                     diaryRepository.saveDiaryImages(getFileFromContent(context, uris))
             ) {
                 is CustomResult.Success -> {
-                    _galleryImages.value = response.data.imageUrls
+                    _imageUrls.value = response.data.imageUrls
                 }
 
                 is CustomResult.ApiError -> {
@@ -113,7 +117,7 @@ class DiaryEditorViewModel @Inject constructor(
                 val response =
                     diaryRepository.updateDiary(
                         diaryId,
-                        _galleryImages.value ?: emptyList(),
+                        _imageUrls.value ?: emptyList(),
                         title,
                         content,
                         shareScope,
