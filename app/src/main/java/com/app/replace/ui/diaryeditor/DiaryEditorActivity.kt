@@ -13,6 +13,7 @@ import com.app.replace.ui.common.getParcelableExtraCompat
 import com.app.replace.ui.common.makeSnackbar
 import com.app.replace.ui.common.showNetworkErrorMessage
 import com.app.replace.ui.common.showUnexpectedErrorMessage
+import com.app.replace.ui.diarydetail.DiaryDetailActivity
 import com.app.replace.ui.diaryeditor.adapter.DiaryEditorImageAdapter
 import com.app.replace.ui.model.DiaryUiModel
 import com.app.replace.ui.model.ShareScope
@@ -98,7 +99,6 @@ class DiaryEditorActivity : AppCompatActivity() {
         when (event) {
             is DiaryEditorViewModel.DiaryEditorEvent.SaveDiaryResult -> {
                 navigateToDetail(event.diaryId)
-                finish()
             }
 
             is DiaryEditorViewModel.DiaryEditorEvent.UpdateDiaryResult -> {
@@ -149,6 +149,7 @@ class DiaryEditorActivity : AppCompatActivity() {
     }
 
     private fun navigateToDetail(diaryId: Long) {
+        startActivity(DiaryDetailActivity.newIntent(this, diaryId))
     }
 
     private fun saveDiary() {
@@ -156,13 +157,13 @@ class DiaryEditorActivity : AppCompatActivity() {
         val diaryContent = binding.etDiaryContent.text.toString().ifBlank { "" }
         val diaryScope = getShareScope()
 
-        when (originActivityKey) {
+        /*when (originActivityKey) {
             SAVE_CODE -> viewModel.saveDiary(diaryTitle, diaryContent, diaryScope)
             UPDATE_CODE -> diary?.let { diary ->
                 viewModel.updateDiary(diary.id, diaryTitle, diaryContent, diaryScope)
             }
-        }
-        finish()
+        }*/
+        viewModel.saveDiary(diaryTitle, diaryContent, diaryScope)
     }
 
     private fun getShareScope(): String {
