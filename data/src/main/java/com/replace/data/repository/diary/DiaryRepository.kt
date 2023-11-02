@@ -1,5 +1,6 @@
 package com.replace.data.repository.diary
 
+import com.replace.data.model.response.DiaryDetailResponse
 import com.replace.data.model.response.DiaryEditorImageResponse
 import com.replace.data.remote.CustomResult
 import java.io.File
@@ -28,4 +29,8 @@ interface DiaryRepository {
     suspend fun deleteDiary(
         diaryId: Long,
     ): CustomResult<Unit>
+
+    suspend fun getDiaryDetail(
+        diaryId: Long,
+    ): CustomResult<DiaryDetailResponse>
 }

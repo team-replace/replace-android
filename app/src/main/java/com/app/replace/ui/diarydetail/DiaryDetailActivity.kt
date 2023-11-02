@@ -1,12 +1,145 @@
 package com.app.replace.ui.diarydetail
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
+import androidx.viewpager2.widget.ViewPager2
 import com.app.replace.R
+import com.app.replace.databinding.ActivityDiaryDetailBinding
+import com.app.replace.ui.diarydetail.adapter.ImageSliderAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DiaryDetailActivity : AppCompatActivity() {
+
+    private val binding: ActivityDiaryDetailBinding by lazy {
+        ActivityDiaryDetailBinding.inflate(layoutInflater)
+    }
+
+    private val viewModel: DiaryDetailViewModel by viewModels()
+
+    private val diaryId: Long by lazy {
+        intent.getLongExtra(KEY_DIARY_ID, 1L)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_diary_detail)
+        setContentView(binding.root)
+        initBinding()
+        initToolbar()
+        getDiaryDetail()
+        setObserver()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.diary_detail_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_update -> {
+                true
+            }
+
+            R.id.action_delete -> {
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun initBinding() {
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+    }
+
+    private fun initToolbar() {
+        setSupportActionBar(binding.tbDiaryDetail)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = ""
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.btn_close)
+        binding.tbDiaryDetail.bringToFront()
+    }
+
+    private fun getDiaryDetail() {
+        viewModel.getDiaryDetail(diaryId)
+    }
+
+    private fun setObserver() {
+        viewModel.diary.observe(this) { diary ->
+            if (diary.images.isNotEmpty()) {
+                setImageSlider(diary.images)
+                setImageIndicators()
+            } else {
+                binding.vpImageSlider.isVisible = false
+                binding.llIndicators.isVisible = false
+            }
+        }
+    }
+
+    private fun setImageSlider(images: List<String>) {
+        binding.vpImageSlider.offscreenPageLimit = 1
+        binding.vpImageSlider.adapter = ImageSliderAdapter(images)
+        binding.vpImageSlider.registerOnPageChangeCallback(
+            object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    updateCurrentIndicator(position)
+                }
+            },
+        )
+    }
+
+    private fun setImageIndicators() {
+        val params = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+        ).apply { setMargins(8, 0, 8, 0) }
+
+        addIndicatorViews(params)
+        updateCurrentIndicator(0)
+    }
+
+    private fun addIndicatorViews(params: LinearLayout.LayoutParams) {
+        List(binding.vpImageSlider.adapter?.itemCount ?: 0) {
+            ImageView(this).apply {
+                setImageResource(R.drawable.ic_bcd4c7_indicator_focus_off)
+                layoutParams = params
+            }.also { indicatorView ->
+                binding.llIndicators.addView(indicatorView)
+            }
+        }
+    }
+
+    private fun updateCurrentIndicator(position: Int) {
+        for (i in 0 until binding.llIndicators.childCount) {
+            val indicatorView = binding.llIndicators.getChildAt(i) as ImageView
+            if (i == position) {
+                indicatorView.setImageResource(R.drawable.ic_9eceb4_indicator_focus_on)
+            } else {
+                indicatorView.setImageResource(R.drawable.ic_bcd4c7_indicator_focus_off)
+            }
+        }
+    }
+
+    companion object {
+
+        private const val KEY_DIARY_ID = "key_diary_id"
+
+        fun newIntent(context: Context, diaryId: Long): Intent {
+            return Intent(context, DiaryDetailActivity::class.java).apply {
+                putExtra(KEY_DIARY_ID, diaryId)
+            }
+        }
     }
 }

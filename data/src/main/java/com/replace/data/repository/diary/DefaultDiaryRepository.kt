@@ -2,6 +2,7 @@ package com.replace.data.repository.diary
 
 import com.replace.data.datasource.diary.DiaryDataSource
 import com.replace.data.model.request.DiaryEditorRequest
+import com.replace.data.model.response.DiaryDetailResponse
 import com.replace.data.model.response.DiaryEditorImageResponse
 import com.replace.data.remote.CustomResult
 import java.io.File
@@ -38,5 +39,9 @@ class DefaultDiaryRepository @Inject constructor(
 
     override suspend fun deleteDiary(diaryId: Long): CustomResult<Unit> {
         return diaryDataSource.deleteDiary(diaryId)
+    }
+
+    override suspend fun getDiaryDetail(diaryId: Long): CustomResult<DiaryDetailResponse> {
+        return diaryDataSource.getDiaryDetail(diaryId)
     }
 }

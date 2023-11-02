@@ -28,4 +28,15 @@ object CustomBindingAdapter {
             .centerCrop()
             .into(view)
     }
+
+    @BindingAdapter("imgUrlFitCenter")
+    @JvmStatic
+    fun setFitCenterImageResource(view: ImageView, url: String?) {
+        Glide.with(view)
+            .load(url)
+            .placeholder(R.drawable.ic_launcher_background)
+            .error(R.drawable.ic_launcher_background)
+            .fitCenter()
+            .into(view)
+    }
 }
