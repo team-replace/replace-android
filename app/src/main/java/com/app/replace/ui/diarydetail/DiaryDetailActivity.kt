@@ -27,7 +27,7 @@ class DiaryDetailActivity : AppCompatActivity() {
     private val viewModel: DiaryDetailViewModel by viewModels()
 
     private val diaryId: Long by lazy {
-        intent.getLongExtra(KEY_DIARY_ID, 1L)
+        intent.getLongExtra(KEY_DIARY_ID, 0L)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,6 +51,11 @@ class DiaryDetailActivity : AppCompatActivity() {
             }
 
             R.id.action_delete -> {
+                true
+            }
+
+            android.R.id.home -> {
+                finish()
                 true
             }
 
