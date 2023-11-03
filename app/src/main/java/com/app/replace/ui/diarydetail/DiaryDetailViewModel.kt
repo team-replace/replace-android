@@ -53,9 +53,37 @@ class DiaryDetailViewModel @Inject constructor(
         }
     }
 
+    fun deleteDiary(diaryId: Long) {
+        viewModelScope.launch {
+            when (val response = diaryRepository.deleteDiary(diaryId)) {
+                is CustomResult.Success -> {
+                    _event.value = DiaryDetailEvent.DeleteDiarySuccess
+                }
+
+                is CustomResult.ApiError -> {
+                    _event.value = DiaryDetailEvent.ShowApiError(response.customThrowable)
+                }
+
+                is CustomResult.UnKnownApiError -> {
+                    _event.value = DiaryDetailEvent.ShowUnexpectedError
+                }
+
+                is CustomResult.NetworkError -> {
+                    _event.value = DiaryDetailEvent.ShowNetworkError(response.fetchState)
+                }
+
+                is CustomResult.NullCustomResult -> {
+                    _event.value = DiaryDetailEvent.DeleteDiarySuccess
+                }
+            }
+        }
+    }
+
     sealed class DiaryDetailEvent {
         class ShowApiError(val throwable: CustomThrowable) : DiaryDetailEvent()
         class ShowNetworkError(val fetchState: FetchState) : DiaryDetailEvent()
         object ShowUnexpectedError : DiaryDetailEvent()
+
+        object DeleteDiarySuccess : DiaryDetailEvent()
     }
 }

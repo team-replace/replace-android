@@ -53,6 +53,7 @@ class DiaryEditorActivity : AppCompatActivity() {
         initBinding()
         initToolbar()
         setAdapter()
+        setDiaryIfUpdate()
         setObserver()
         selectImages()
         setClickListener()
@@ -83,6 +84,14 @@ class DiaryEditorActivity : AppCompatActivity() {
 
     private fun setAdapter() {
         binding.rvDiaryImage.adapter = adapter
+    }
+
+    private fun setDiaryIfUpdate() {
+        diary?.let {
+            if (originActivityKey == UPDATE_CODE) {
+                viewModel.initViewModelOnUpdate(it)
+            }
+        }
     }
 
     private fun setObserver() {
