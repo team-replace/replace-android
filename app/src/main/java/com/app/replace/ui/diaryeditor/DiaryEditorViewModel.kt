@@ -23,12 +23,13 @@ class DiaryEditorViewModel @Inject constructor(
     private val diaryRepository: DiaryRepository,
 ) : ViewModel() {
 
-    private val _images = mutableListOf<String>()
-    val images: List<String> get() = _images.toList()
+    private val _originalImages = mutableListOf<String>()
+    private val _newImages = mutableListOf<String>()
+    val images: List<String> get() = _originalImages.toList() + _newImages.toList()
     private val _galleryImages = MutableLiveData<List<String>>()
     val galleryImages: LiveData<List<String>> get() = _galleryImages
 
-    private val _imageUrls = MutableLiveData<List<String>>()
+    private val imageUrls = mutableListOf<String>()
 
     private val _diary = MutableLiveData<DiaryUiModel>()
     val diary: LiveData<DiaryUiModel> get() = _diary
@@ -39,17 +40,18 @@ class DiaryEditorViewModel @Inject constructor(
 
     fun initViewModelOnUpdate(diary: DiaryUiModel) {
         _diary.value = diary
-        _images.addAll(diary.images)
+        _originalImages.addAll(diary.images)
         _galleryImages.value = images.toList()
+        imageUrls.addAll(diary.images)
     }
 
     fun addSelectedImages(image: String) {
-        _images.add(image)
+        _newImages.add(image)
         _galleryImages.value = images.toList()
     }
 
     fun deleteImages(image: String) {
-        _images.remove(image)
+        _newImages.remove(image)
         _galleryImages.value = images.toList()
     }
 
@@ -57,7 +59,7 @@ class DiaryEditorViewModel @Inject constructor(
         viewModelScope.launch {
             when (
                 val response = diaryRepository.saveDiary(
-                    _imageUrls.value ?: emptyList(),
+                    imageUrls,
                     title,
                     content,
                     shareScope,
@@ -89,14 +91,14 @@ class DiaryEditorViewModel @Inject constructor(
     }
 
     fun saveImages(context: Context) {
-        val uris = _images.map { Uri.parse(it) }
+        val uris = _newImages.map { Uri.parse(it) }
         viewModelScope.launch {
             when (
                 val response =
                     diaryRepository.saveDiaryImages(getFileFromContent(context, uris))
             ) {
                 is CustomResult.Success -> {
-                    _imageUrls.value = response.data.imageUrls
+                    imageUrls.addAll(response.data.imageUrls)
                 }
 
                 is CustomResult.ApiError -> {
@@ -129,7 +131,7 @@ class DiaryEditorViewModel @Inject constructor(
                 val response =
                     diaryRepository.updateDiary(
                         diaryId,
-                        _imageUrls.value ?: emptyList(),
+                        imageUrls,
                         title,
                         content,
                         shareScope,
@@ -169,7 +171,7 @@ class DiaryEditorViewModel @Inject constructor(
     }
 
     fun checkImagesCount(): Boolean {
-        return _images.size < 10
+        return _originalImages.size < 10
     }
 
     sealed class DiaryEditorEvent {

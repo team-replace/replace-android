@@ -33,7 +33,7 @@ class DiaryDetailActivity : AppCompatActivity() {
     private val viewModel: DiaryDetailViewModel by viewModels()
 
     private val diaryId: Long by lazy {
-        intent.getLongExtra(KEY_DIARY_ID, 3L)
+        intent.getLongExtra(KEY_DIARY_ID, 1L)
     }
 
     private val deleteDialog: DeleteDialog by lazy {

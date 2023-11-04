@@ -111,7 +111,10 @@ class DiaryEditorActivity : AppCompatActivity() {
             }
 
             is DiaryEditorViewModel.DiaryEditorEvent.UpdateDiaryResult -> {
-                finish()
+                diary?.let {
+                    navigateToDetail(it.id)
+                    finish()
+                }
             }
 
             is DiaryEditorViewModel.DiaryEditorEvent.ShowApiError -> {
@@ -165,14 +168,15 @@ class DiaryEditorActivity : AppCompatActivity() {
         val diaryTitle = binding.etDiaryTitle.text.toString()
         val diaryContent = binding.etDiaryContent.text.toString().ifBlank { "" }
         val diaryScope = getShareScope()
-
         /*when (originActivityKey) {
             SAVE_CODE -> viewModel.saveDiary(diaryTitle, diaryContent, diaryScope)
             UPDATE_CODE -> diary?.let { diary ->
                 viewModel.updateDiary(diary.id, diaryTitle, diaryContent, diaryScope)
             }
         }*/
-        viewModel.saveDiary(diaryTitle, diaryContent, diaryScope)
+        diary?.let { diary ->
+            viewModel.updateDiary(diary.id, diaryTitle, diaryContent, diaryScope)
+        }
     }
 
     private fun getShareScope(): String {
