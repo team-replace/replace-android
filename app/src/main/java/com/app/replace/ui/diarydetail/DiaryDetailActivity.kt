@@ -14,7 +14,13 @@ import androidx.core.view.isVisible
 import androidx.viewpager2.widget.ViewPager2
 import com.app.replace.R
 import com.app.replace.databinding.ActivityDiaryDetailBinding
+import com.app.replace.ui.common.makeSnackbar
+import com.app.replace.ui.common.showNetworkErrorMessage
+import com.app.replace.ui.common.showUnexpectedErrorMessage
 import com.app.replace.ui.diarydetail.adapter.ImageSliderAdapter
+import com.app.replace.ui.diarydetail.dialog.DeleteDialog
+import com.app.replace.ui.diaryeditor.DiaryEditorActivity
+import com.app.replace.ui.model.DiaryUiModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,6 +34,12 @@ class DiaryDetailActivity : AppCompatActivity() {
 
     private val diaryId: Long by lazy {
         intent.getLongExtra(KEY_DIARY_ID, 1L)
+    }
+
+    private val deleteDialog: DeleteDialog by lazy {
+        DeleteDialog {
+            viewModel.deleteDiary(diaryId)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,10 +59,18 @@ class DiaryDetailActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_update -> {
+                val diary = viewModel.diary.value ?: return false
+                navigateToEditor(diary)
                 true
             }
 
             R.id.action_delete -> {
+                deleteDialog.show(supportFragmentManager, DELETE_DIALOG_TAG)
+                true
+            }
+
+            android.R.id.home -> {
+                finish()
                 true
             }
 
@@ -68,7 +88,6 @@ class DiaryDetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = ""
         supportActionBar?.setHomeAsUpIndicator(R.drawable.btn_close)
-        binding.tbDiaryDetail.bringToFront()
     }
 
     private fun getDiaryDetail() {
@@ -84,6 +103,9 @@ class DiaryDetailActivity : AppCompatActivity() {
                 binding.vpImageSlider.isVisible = false
                 binding.llIndicators.isVisible = false
             }
+        }
+        viewModel.event.observe(this) { event ->
+            handleEvent(event)
         }
     }
 
@@ -132,9 +154,35 @@ class DiaryDetailActivity : AppCompatActivity() {
         }
     }
 
+    private fun navigateToEditor(diary: DiaryUiModel) {
+        startActivity(DiaryEditorActivity.newIntent(this, diary, DiaryEditorActivity.UPDATE_CODE))
+    }
+
+    private fun handleEvent(event: DiaryDetailViewModel.DiaryDetailEvent) {
+        when (event) {
+            is DiaryDetailViewModel.DiaryDetailEvent.DeleteDiarySuccess -> {
+                deleteDialog.dismiss()
+                finish()
+            }
+
+            is DiaryDetailViewModel.DiaryDetailEvent.ShowApiError -> {
+                binding.root.makeSnackbar(event.throwable.message)
+            }
+
+            is DiaryDetailViewModel.DiaryDetailEvent.ShowNetworkError -> {
+                binding.root.showNetworkErrorMessage(event.fetchState)
+            }
+
+            is DiaryDetailViewModel.DiaryDetailEvent.ShowUnexpectedError -> {
+                binding.root.showUnexpectedErrorMessage()
+            }
+        }
+    }
+
     companion object {
 
         private const val KEY_DIARY_ID = "key_diary_id"
+        private const val DELETE_DIALOG_TAG = "DeleteDialog"
 
         fun newIntent(context: Context, diaryId: Long): Intent {
             return Intent(context, DiaryDetailActivity::class.java).apply {

@@ -30,4 +30,10 @@
     <string name = "diary_detail_toolbar_menu_delete">삭제</string>
     <string name="diary_detail_profile_image_description">프로필 이미지</string>
     <string name="diary_detail_place_marker_description">장소마커</string>
+    <string name="diary_detail_title_format">&quot;%s&quot;</string>
+
+    <!-- diary detail activity delete dialog -->
+    <string name="diary_detail_delete_dialog_title">정말로 삭제하시겠습니까?</string>
+    <string name="diary_detail_delete_dialog_yes">예</string>
+    <string name="diary_detail_delete_dialog_no">아니요</string>
 </resources>
