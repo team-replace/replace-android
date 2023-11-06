@@ -2,6 +2,7 @@ package com.app.replace.ui.common
 
 import android.view.View
 import com.app.replace.R
+import com.app.replace.ui.common.listener.OnSingleClickListener
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.replace.data.common.FetchState
@@ -22,4 +23,11 @@ fun View.showNetworkErrorMessage(fetchState: FetchState) {
 
 fun View.showUnexpectedErrorMessage() {
     makeSnackbar(this.context.getString(R.string.unexpected_error_message))
+}
+
+fun View.setOnSingleClickListener(onSingleClick: (View) -> Unit) {
+    val oneClick = OnSingleClickListener {
+        onSingleClick(it)
+    }
+    setOnClickListener(oneClick)
 }

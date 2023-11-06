@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.app.replace.R
 import com.app.replace.databinding.ActivityDiaryEditorBinding
+import com.app.replace.ui.common.dialog.LoadingDialog
 import com.app.replace.ui.common.getParcelableExtraCompat
 import com.app.replace.ui.common.makeSnackbar
 import com.app.replace.ui.common.setOnSingleClickListener
@@ -48,6 +49,9 @@ class DiaryEditorActivity : AppCompatActivity() {
         intent.getParcelableExtraCompat(KEY_DIARY_EDITOR_DIARY) as? DiaryUiModel
     }
 
+    private val loadingDialog: LoadingDialog by lazy {
+        LoadingDialog(getString(R.string.loading_save_message))
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -108,7 +112,9 @@ class DiaryEditorActivity : AppCompatActivity() {
     private fun handleEvent(event: DiaryEditorViewModel.DiaryEditorEvent) {
         when (event) {
             is DiaryEditorViewModel.DiaryEditorEvent.SaveDiaryResult -> {
+                loadingDialog.dismiss()
                 navigateToDetail(event.diaryId)
+                finish()
             }
 
             is DiaryEditorViewModel.DiaryEditorEvent.UpdateDiaryResult -> {
@@ -169,14 +175,12 @@ class DiaryEditorActivity : AppCompatActivity() {
         val diaryTitle = binding.etDiaryTitle.text.toString()
         val diaryContent = binding.etDiaryContent.text.toString().ifBlank { "" }
         val diaryScope = getShareScope()
-        /*when (originActivityKey) {
+        loadingDialog.show(supportFragmentManager, LOADING_DIALOG_TAG)
+        when (originActivityKey) {
             SAVE_CODE -> viewModel.saveDiary(diaryTitle, diaryContent, diaryScope)
             UPDATE_CODE -> diary?.let { diary ->
                 viewModel.updateDiary(diary.id, diaryTitle, diaryContent, diaryScope)
             }
-        }*/
-        diary?.let { diary ->
-            viewModel.updateDiary(diary.id, diaryTitle, diaryContent, diaryScope)
         }
     }
 
@@ -194,6 +198,7 @@ class DiaryEditorActivity : AppCompatActivity() {
         const val UPDATE_CODE = 3000
         private const val KEY_DIARY_EDITOR_CHECK = "key_diary_editor_check"
         private const val KEY_DIARY_EDITOR_DIARY = "key_diary_editor_diary"
+        private const val LOADING_DIALOG_TAG = "loadingDialog"
 
         fun newIntent(context: Context, code: Int): Intent {
             return Intent(context, DiaryEditorActivity::class.java).apply {
