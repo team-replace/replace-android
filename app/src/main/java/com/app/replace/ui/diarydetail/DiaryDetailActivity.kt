@@ -14,6 +14,7 @@ import androidx.core.view.isVisible
 import androidx.viewpager2.widget.ViewPager2
 import com.app.replace.R
 import com.app.replace.databinding.ActivityDiaryDetailBinding
+import com.app.replace.ui.common.dialog.LoadingDialog
 import com.app.replace.ui.common.makeSnackbar
 import com.app.replace.ui.common.showNetworkErrorMessage
 import com.app.replace.ui.common.showUnexpectedErrorMessage
@@ -33,7 +34,7 @@ class DiaryDetailActivity : AppCompatActivity() {
     private val viewModel: DiaryDetailViewModel by viewModels()
 
     private val diaryId: Long by lazy {
-        intent.getLongExtra(KEY_DIARY_ID, 1L)
+        intent.getLongExtra(KEY_DIARY_ID, 0L)
     }
 
     private val deleteDialog: DeleteDialog by lazy {
@@ -42,11 +43,16 @@ class DiaryDetailActivity : AppCompatActivity() {
         }
     }
 
+    private val loadingDialog: LoadingDialog by lazy {
+        LoadingDialog(getString(R.string.loading_message))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         initBinding()
         initToolbar()
+        initLoading()
         getDiaryDetail()
         setObserver()
     }
@@ -90,12 +96,17 @@ class DiaryDetailActivity : AppCompatActivity() {
         supportActionBar?.setHomeAsUpIndicator(R.drawable.btn_close)
     }
 
+    private fun initLoading() {
+        loadingDialog.show(supportFragmentManager, LOADING_DIALOG_TAG)
+    }
+
     private fun getDiaryDetail() {
         viewModel.getDiaryDetail(diaryId)
     }
 
     private fun setObserver() {
         viewModel.diary.observe(this) { diary ->
+            loadingDialog.dismiss()
             if (diary.images.isNotEmpty()) {
                 setImageSlider(diary.images)
                 setImageIndicators()
@@ -183,6 +194,7 @@ class DiaryDetailActivity : AppCompatActivity() {
 
         private const val KEY_DIARY_ID = "key_diary_id"
         private const val DELETE_DIALOG_TAG = "DeleteDialog"
+        private const val LOADING_DIALOG_TAG = "LoadingDialog"
 
         fun newIntent(context: Context, diaryId: Long): Intent {
             return Intent(context, DiaryDetailActivity::class.java).apply {

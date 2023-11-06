@@ -7,6 +7,8 @@
     <string name="parse_error_message">데이터를 처리하는 중에 문제가 발생했습니다</string>
     <string name="fail_message">네트워크 처리에 실패했습니다</string>
     <string name="unexpected_error_message">예상하지 못한 오류가 발생했습니다</string>
+    <string name="loading_message">로딩 중입니다</string>
+    <string name="loading_save_message">저장 중입니다</string>
 
     <!-- bottom navigation-->
     <string name="bottom_navigation_home_title">홈</string>
