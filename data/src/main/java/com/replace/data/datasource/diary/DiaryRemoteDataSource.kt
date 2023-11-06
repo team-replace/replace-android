@@ -14,7 +14,7 @@ import javax.inject.Inject
 class DiaryRemoteDataSource @Inject constructor(
     private val diaryService: DiaryService,
 ) : DiaryDataSource {
-    override suspend fun saveDiary(diaryEditorRequest: DiaryEditorRequest): CustomResult<Long> {
+    override suspend fun saveDiary(diaryEditorRequest: DiaryEditorRequest): CustomResult<Unit> {
         return diaryService.saveDiary(diaryEditorRequest)
     }
 

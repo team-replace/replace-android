@@ -16,7 +16,7 @@ class DefaultDiaryRepository @Inject constructor(
         title: String,
         content: String,
         shareScope: String,
-    ): CustomResult<Long> {
+    ): CustomResult<Unit> {
         return diaryDataSource.saveDiary(DiaryEditorRequest(images, title, content, shareScope))
     }
 

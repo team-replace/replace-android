@@ -17,23 +17,15 @@ class ReplaceCall<T> constructor(
         return callDelegate.enqueue(object : Callback<T> {
             override fun onResponse(call: Call<T>, response: Response<T>) {
                 if (response.isSuccessful) {
-                    val locationHeader = response.headers()["Location"]
-                    locationHeader?.substringAfterLast("/")?.let {
+                    response.body()?.let {
                         callback.onResponse(
                             this@ReplaceCall,
-                            Response.success(CustomResult.Success(it as T)),
+                            Response.success(CustomResult.Success(it, response.headers())),
                         )
-                    } ?: run {
-                        response.body()?.let {
-                            callback.onResponse(
-                                this@ReplaceCall,
-                                Response.success(CustomResult.Success(it)),
-                            )
-                        } ?: callback.onResponse(
-                            this@ReplaceCall,
-                            Response.success(CustomResult.NullCustomResult()),
-                        )
-                    }
+                    } ?: callback.onResponse(
+                        this@ReplaceCall,
+                        Response.success(CustomResult.NullCustomResult()),
+                    )
                 } else {
                     when (response.code()) {
                         in 400..599 -> {

@@ -54,7 +54,9 @@ class DiaryEditorViewModel @Inject constructor(
                 )
             ) {
                 is CustomResult.Success -> {
-                    _event.value = DiaryEditorEvent.SaveDiaryResult(response.data)
+                    _event.value = DiaryEditorEvent.SaveDiaryResult(
+                        response.headers["Location"]?.substringAfterLast("/")?.toLong() ?: 0,
+                    )
                 }
 
                 is CustomResult.ApiError -> {
