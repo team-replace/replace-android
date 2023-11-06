@@ -11,6 +11,7 @@ import com.app.replace.R
 import com.app.replace.databinding.ActivityDiaryEditorBinding
 import com.app.replace.ui.common.getParcelableExtraCompat
 import com.app.replace.ui.common.makeSnackbar
+import com.app.replace.ui.common.setOnSingleClickListener
 import com.app.replace.ui.common.showNetworkErrorMessage
 import com.app.replace.ui.common.showUnexpectedErrorMessage
 import com.app.replace.ui.diarydetail.DiaryDetailActivity
@@ -136,7 +137,7 @@ class DiaryEditorActivity : AppCompatActivity() {
     }
 
     private fun selectImages() {
-        includeBinding.clSelectImage.setOnClickListener {
+        includeBinding.clSelectImage.setOnSingleClickListener {
             if (viewModel.checkImagesCount()) {
                 TedImagePicker.with(this)
                     .max(MAX_IMAGE_NUMBER - viewModel.images.size, "사진은 최대 $MAX_IMAGE_NUMBER 장")
@@ -148,7 +149,7 @@ class DiaryEditorActivity : AppCompatActivity() {
     }
 
     private fun setClickListener() {
-        binding.tvSave.setOnClickListener {
+        binding.tvSave.setOnSingleClickListener {
             viewModel.checkUploadAble(binding.etDiaryTitle.text.toString())
         }
     }
