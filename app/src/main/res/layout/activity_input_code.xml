@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.inputcode.InputCodeActivity">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tb_input_code"
+            android:layout_width="0dp"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="140dp" />
+
+        <TextView
+            android:id="@+id/tv_input_code_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/input_code_title"
+            android:textColor="@color/black_000000"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guideline_top" />
+
+        <Space
+            android:id="@+id/space_title_bottom"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="H, 360:28"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_input_code_title" />
+
+        <EditText
+            android:id="@+id/et_input_code"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_stroke_9eceb4_radius_15dp"
+            android:gravity="center"
+            android:hint="@string/input_code_hint_message"
+            android:textColor="@color/gray_434343"
+            android:textColorHint="@color/gray_D9D9D9"
+            app:layout_constraintDimensionRatio="H,320:44"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/space_title_bottom"
+            app:layout_constraintWidth_percent="0.8888" />
+
+        <Space
+            android:id="@+id/space_code_bottom"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="H, 360:52"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_input_code" />
+
+        <TextView
+            android:id="@+id/tv_input_ok"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_9eceb4_radius_15dp"
+            android:gravity="center"
+            android:text="@string/input_ok_message"
+            android:textColor="@color/white_FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintDimensionRatio="H,280:44"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:elevation="8dp"
+            app:layout_constraintTop_toBottomOf="@id/space_code_bottom"
+            app:layout_constraintWidth_percent="0.7777" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

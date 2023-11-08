@@ -18,15 +18,18 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.inputcode.InputCodeActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.coupleconnection.CoupleConnectionActivity"
             android:exported="false" />
         <activity
             android:name=".ui.diarydetail.DiaryDetailActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".ui.diaryeditor.DiaryEditorActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="true">
