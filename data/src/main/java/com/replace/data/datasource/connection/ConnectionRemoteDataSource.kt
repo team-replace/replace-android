@@ -1,5 +1,6 @@
 package com.replace.data.datasource.connection
 
+import com.replace.data.model.request.ConnectionCodeRequest
 import com.replace.data.remote.CustomResult
 import com.replace.data.service.ConnectionService
 import javax.inject.Inject
@@ -9,5 +10,9 @@ class ConnectionRemoteDataSource @Inject constructor(
 ) : ConnectionDataSource {
     override suspend fun getConnectionCode(): CustomResult<String> {
         return connectionService.getConnectionCode()
+    }
+
+    override suspend fun postConnectionCode(connectionCodeRequest: ConnectionCodeRequest): CustomResult<Unit> {
+        return connectionService.postConnectionCode(connectionCodeRequest)
     }
 }
