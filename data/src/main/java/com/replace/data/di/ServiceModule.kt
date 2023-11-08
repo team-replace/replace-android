@@ -1,5 +1,6 @@
 package com.replace.data.di
 
+import com.replace.data.service.ConnectionService
 import com.replace.data.service.DiaryService
 import dagger.Module
 import dagger.Provides
@@ -18,5 +19,13 @@ object ServiceModule {
         retrofit: Retrofit,
     ): DiaryService {
         return retrofit.create(DiaryService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideConnectionService(
+        retrofit: Retrofit,
+    ): ConnectionService {
+        return retrofit.create(ConnectionService::class.java)
     }
 }

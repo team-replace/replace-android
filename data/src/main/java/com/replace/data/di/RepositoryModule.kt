@@ -1,5 +1,7 @@
 package com.replace.data.di
 
+import com.replace.data.repository.connection.ConnectionRepository
+import com.replace.data.repository.connection.DefaultConnectionRepository
 import com.replace.data.repository.diary.DefaultDiaryRepository
 import com.replace.data.repository.diary.DiaryRepository
 import dagger.Binds
@@ -17,4 +19,10 @@ abstract class RepositoryModule {
     abstract fun bindDiaryRepository(
         repository: DefaultDiaryRepository,
     ): DiaryRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindConnectionRepository(
+        repository: DefaultConnectionRepository,
+    ): ConnectionRepository
 }
