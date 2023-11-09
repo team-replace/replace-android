@@ -9,10 +9,10 @@ import retrofit2.http.POST
 interface ConnectionService {
 
     @GET("/connection/code")
-    fun getConnectionCode(): CustomResult<String>
+    suspend fun getConnectionCode(): CustomResult<String>
 
     @POST("/connection/code")
-    fun postConnectionCode(
+    suspend fun postConnectionCode(
         @Body connectionCodeRequest: ConnectionCodeRequest,
     ): CustomResult<Unit>
 }
