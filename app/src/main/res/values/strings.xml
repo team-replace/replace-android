@@ -28,8 +28,8 @@
     <string name="diary_editor_diary_save">작성 완료</string>
 
     <!-- diary detail activity -->
-    <string name = "diary_detail_toolbar_menu_update">수정</string>
-    <string name = "diary_detail_toolbar_menu_delete">삭제</string>
+    <string name="diary_detail_toolbar_menu_update">수정</string>
+    <string name="diary_detail_toolbar_menu_delete">삭제</string>
     <string name="diary_detail_profile_image_description">프로필 이미지</string>
     <string name="diary_detail_place_marker_description">장소마커</string>
     <string name="diary_detail_title_format">&quot;%s&quot;</string>
@@ -38,4 +38,9 @@
     <string name="diary_detail_delete_dialog_title">정말로 삭제하시겠습니까?</string>
     <string name="diary_detail_delete_dialog_yes">예</string>
     <string name="diary_detail_delete_dialog_no">아니요</string>
+
+    <!-- couple connection activity -->
+    <string name="replace_code_message">당신의 리플 코드</string>
+    <string name="share_code_message">나의 코드 공유</string>
+    <string name="input_code_message">상대방의 코드 입력</string>
 </resources>

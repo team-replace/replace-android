@@ -1,5 +1,7 @@
 package com.replace.data.di
 
+import com.replace.data.datasource.connection.ConnectionDataSource
+import com.replace.data.datasource.connection.ConnectionRemoteDataSource
 import com.replace.data.datasource.diary.DiaryDataSource
 import com.replace.data.datasource.diary.DiaryRemoteDataSource
 import dagger.Binds
@@ -17,4 +19,10 @@ abstract class DataSourceModule {
     abstract fun bindDiaryDataSource(
         remoteDataSource: DiaryRemoteDataSource,
     ): DiaryDataSource
+
+    @Singleton
+    @Binds
+    abstract fun bindConnectionDataSource(
+        remoteDataSource: ConnectionRemoteDataSource,
+    ): ConnectionDataSource
 }
