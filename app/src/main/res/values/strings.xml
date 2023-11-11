@@ -43,4 +43,9 @@
     <string name="replace_code_message">당신의 리플 코드</string>
     <string name="share_code_message">나의 코드 공유</string>
     <string name="input_code_message">상대방의 코드 입력</string>
+
+    <!-- input code activity -->
+    <string name="input_code_title">상대방의 코드를 입력해서 커플 연결을 해주세요</string>
+    <string name="input_code_hint_message">상대방의 코드를 입력해주세요</string>
+    <string name="input_ok_message">완료</string>
 </resources>
