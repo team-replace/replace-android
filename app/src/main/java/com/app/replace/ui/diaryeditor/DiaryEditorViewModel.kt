@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.replace.ui.common.SingleLiveEvent
 import com.app.replace.ui.common.processAndAdjustImage
-import com.app.replace.ui.model.DiaryUiModel
+import com.app.replace.ui.model.DiaryDetailUiModel
 import com.replace.data.common.CustomThrowable
 import com.replace.data.common.FetchState
 import com.replace.data.remote.CustomResult
@@ -31,14 +31,14 @@ class DiaryEditorViewModel @Inject constructor(
 
     private val imageUrls = mutableListOf<String>()
 
-    private val _diary = MutableLiveData<DiaryUiModel>()
-    val diary: LiveData<DiaryUiModel> get() = _diary
+    private val _diary = MutableLiveData<DiaryDetailUiModel>()
+    val diary: LiveData<DiaryDetailUiModel> get() = _diary
 
     private val _event: SingleLiveEvent<DiaryEditorEvent> = SingleLiveEvent()
     val event: LiveData<DiaryEditorEvent>
         get() = _event
 
-    fun initViewModelOnUpdate(diary: DiaryUiModel) {
+    fun initViewModelOnUpdate(diary: DiaryDetailUiModel) {
         _diary.value = diary
         _originalImages.addAll(diary.images)
         _galleryImages.value = images.toList()

@@ -21,7 +21,7 @@ import com.app.replace.ui.common.showUnexpectedErrorMessage
 import com.app.replace.ui.diarydetail.adapter.ImageSliderAdapter
 import com.app.replace.ui.diarydetail.dialog.DeleteDialog
 import com.app.replace.ui.diaryeditor.DiaryEditorActivity
-import com.app.replace.ui.model.DiaryUiModel
+import com.app.replace.ui.model.DiaryDetailUiModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -165,7 +165,7 @@ class DiaryDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun navigateToEditor(diary: DiaryUiModel) {
+    private fun navigateToEditor(diary: DiaryDetailUiModel) {
         startActivity(DiaryEditorActivity.newIntent(this, diary, DiaryEditorActivity.UPDATE_CODE))
     }
 
