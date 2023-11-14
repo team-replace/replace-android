@@ -40,7 +40,7 @@
             android:id="@+id/cv_calendar"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="H,320:268"
+            app:layout_constraintDimensionRatio="H,320:280"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/space_title_bottom"
