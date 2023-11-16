@@ -1,6 +1,7 @@
 package com.replace.data.datasource.diary
 
 import com.replace.data.model.request.DiaryEditorRequest
+import com.replace.data.model.response.DiariesResponse
 import com.replace.data.model.response.DiaryDetailResponse
 import com.replace.data.model.response.DiaryEditorImageResponse
 import com.replace.data.remote.CustomResult
@@ -35,6 +36,14 @@ class DiaryRemoteDataSource @Inject constructor(
 
     override suspend fun getDiaryDetail(diaryId: Long): CustomResult<DiaryDetailResponse> {
         return diaryService.getDiaryDetail(diaryId)
+    }
+
+    override suspend fun getDiariesWithDate(
+        year: Int,
+        month: Int,
+        day: Int,
+    ): CustomResult<DiariesResponse> {
+        return diaryService.getDiariesWithDate(year, month, day)
     }
 
     private fun List<File>.generateMultiPartFromFile() =

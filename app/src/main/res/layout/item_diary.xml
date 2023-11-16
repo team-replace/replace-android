@@ -3,6 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="user"
+            type="com.app.replace.ui.model.WriterUiModel" />
+
+        <variable
+            name="content"
+            type="com.app.replace.ui.model.DiaryContentUiModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -18,6 +29,7 @@
 
         <ImageView
             android:id="@+id/iv_profile_image"
+            imgUrlCircleCrop="@{user.profileImage}"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
@@ -31,6 +43,7 @@
             android:id="@+id/tv_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{user.nickname}"
             android:textColor="@color/black_000000"
             android:textSize="14sp"
             android:textStyle="bold"
@@ -54,6 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:text="@{content.title}"
             android:textColor="@color/black_000000"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -80,6 +94,7 @@
             android:layout_marginHorizontal="5dp"
             android:background="@color/gray_D4DDD8"
             android:gravity="center"
+            android:text="@{@string/image_remain_count(content.numOfExtraThumbnails)}"
             android:textColor="@color/white_FFFFFF"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -92,6 +107,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{content.createdAt}"
             android:textColor="@color/black_000000"
             android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@id/space_bottom"

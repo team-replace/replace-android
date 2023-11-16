@@ -25,7 +25,7 @@ fun DiaryContentResponse.toUi(): DiaryContentUiModel {
         title = this.title,
         thumbnails = this.thumbnails,
         numOfExtraThumbnails = this.numOfExtraThumbnails,
-        createdAt = this.createdAt,
+        createdAt = DateUiModel(createdAt).getDate(),
     )
 }
 

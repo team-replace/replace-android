@@ -1,6 +1,7 @@
 package com.replace.data.service
 
 import com.replace.data.model.request.DiaryEditorRequest
+import com.replace.data.model.response.DiariesResponse
 import com.replace.data.model.response.DiaryDetailResponse
 import com.replace.data.model.response.DiaryEditorImageResponse
 import com.replace.data.remote.CustomResult
@@ -13,6 +14,7 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Part
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface DiaryService {
 
@@ -42,4 +44,11 @@ interface DiaryService {
     suspend fun getDiaryDetail(
         @Path("diaryId") diaryId: Long,
     ): CustomResult<DiaryDetailResponse>
+
+    @GET("/diarys")
+    suspend fun getDiariesWithDate(
+        @Query("year") year: Int,
+        @Query("month") month: Int,
+        @Query("day") day: Int,
+    ): CustomResult<DiariesResponse>
 }

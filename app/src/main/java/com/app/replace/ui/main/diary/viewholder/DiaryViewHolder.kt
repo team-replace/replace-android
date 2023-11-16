@@ -11,12 +11,12 @@ class DiaryViewHolder private constructor(
     val binding: ItemDiaryWithProfileBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    private val diaryContentAdapter by lazy {
-        DiaryContentAdapter()
-    }
+    private lateinit var diaryContentAdapter: DiaryContentAdapter
 
     fun bind(diary: DiaryUiModel) {
+        diaryContentAdapter = DiaryContentAdapter.from(diary)
         binding.rvDiary.adapter = diaryContentAdapter
+        diaryContentAdapter.submitList(diary.contents)
     }
 
     companion object {
