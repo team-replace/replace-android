@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="onDisconnectClick"
+            type="kotlin.jvm.functions.Function1" />
+
+        <variable
+            name="onCancelClick"
+            type="kotlin.jvm.functions.Function1" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_ffffff_radius_15dp">
+
+        <Space
+            android:id="@+id/space_top"
+            android:layout_width="280dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="H, 280:64"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_couple_disconnect_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/couple_disconnect_dialog_title"
+            android:textColor="@color/black_000000"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/space_top" />
+
+        <Space
+            android:id="@+id/space_title_bottom"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="H,280:20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_couple_disconnect_title" />
+
+        <TextView
+            android:id="@+id/tv_couple_disconnect_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/couple_disconnect_dialog_content"
+            android:textColor="@color/gray_434343"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/space_title_bottom" />
+
+        <Space
+            android:id="@+id/space_content_bottom"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="H, 280:48"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_couple_disconnect_content" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_dialog_yes"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/white_FFFFFF"
+            android:text="@string/couple_disconnect_dialog_yes"
+            android:textColor="@color/gray_929292"
+            android:textSize="14sp"
+            app:layout_constraintDimensionRatio="H, 180:44"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/space_content_bottom"
+            app:layout_constraintWidth_percent="0.6428" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_dialog_no"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/green_9ECEB4"
+            android:text="@string/couple_disconnect_dialog_no"
+            android:textColor="@color/white_FFFFFF"
+            android:textSize="14sp"
+            app:layout_constraintDimensionRatio="H, 180:44"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_dialog_yes"
+            app:layout_constraintWidth_percent="0.6428" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="H,280:28"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_dialog_no" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
