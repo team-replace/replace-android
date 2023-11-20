@@ -4,6 +4,8 @@ import com.replace.data.repository.connection.ConnectionRepository
 import com.replace.data.repository.connection.DefaultConnectionRepository
 import com.replace.data.repository.diary.DefaultDiaryRepository
 import com.replace.data.repository.diary.DiaryRepository
+import com.replace.data.repository.profile.DefaultProfileRepository
+import com.replace.data.repository.profile.ProfileRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -25,4 +27,10 @@ abstract class RepositoryModule {
     abstract fun bindConnectionRepository(
         repository: DefaultConnectionRepository,
     ): ConnectionRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindProfileRepository(
+        repository: DefaultProfileRepository,
+    ): ProfileRepository
 }

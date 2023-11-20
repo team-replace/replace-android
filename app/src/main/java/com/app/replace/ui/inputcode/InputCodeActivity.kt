@@ -1,5 +1,7 @@
 package com.app.replace.ui.inputcode
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -56,7 +58,7 @@ class InputCodeActivity : AppCompatActivity() {
     private fun handleEvent(event: InputCodeViewModel.InputCodeEvent) {
         when (event) {
             is InputCodeViewModel.InputCodeEvent.Success -> {
-                finishAffinity()
+                finish()
             }
 
             is InputCodeViewModel.InputCodeEvent.ShowApiError -> {
@@ -75,6 +77,12 @@ class InputCodeActivity : AppCompatActivity() {
             is InputCodeViewModel.InputCodeEvent.IsCodePostAble -> {
                 binding.tvInputOk.isEnabled = true
             }
+        }
+    }
+
+    companion object {
+        fun newIntent(context: Context): Intent {
+            return Intent(context, InputCodeActivity::class.java)
         }
     }
 }

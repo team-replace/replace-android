@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import com.app.replace.R
 import com.app.replace.databinding.FragmentHomeBinding
 import com.app.replace.ui.main.MainActivity.Companion.LOCATION_PERMISSION_REQUEST_CODE
-import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback

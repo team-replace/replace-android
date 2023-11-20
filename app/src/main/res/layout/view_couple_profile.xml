@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="coupleProfile"
+            type="com.app.replace.ui.model.CoupleProfileUiModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_my_profile_image"
+            imgUrlCircleCrop="@{coupleProfile.user.profileImage}"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@id/iv_love_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.277" />
+
+        <ImageView
+            android:id="@+id/iv_love_icon"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_love"
+            app:layout_constraintBottom_toBottomOf="@id/iv_my_profile_image"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@id/iv_partner_profile_image"
+            app:layout_constraintStart_toEndOf="@id/iv_my_profile_image"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.1333" />
+
+        <ImageView
+            android:id="@+id/iv_partner_profile_image"
+            imgUrlCircleCrop="@{coupleProfile.partner.profileImage}"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_love_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.277" />
+
+        <TextView
+            android:id="@+id/tv_user_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{coupleProfile.user.nickname}"
+            android:textColor="@color/green_9ECEB4"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/iv_my_profile_image"
+            app:layout_constraintStart_toStartOf="@+id/iv_my_profile_image"
+            app:layout_constraintTop_toBottomOf="@id/iv_my_profile_image"
+            tools:text="바보" />
+
+        <TextView
+            android:id="@+id/tv_partner_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{coupleProfile.partner.nickname}"
+            android:textColor="@color/green_9ECEB4"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/iv_partner_profile_image"
+            app:layout_constraintStart_toStartOf="@+id/iv_partner_profile_image"
+            app:layout_constraintTop_toBottomOf="@+id/iv_partner_profile_image"
+            tools:text="바보" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

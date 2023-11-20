@@ -1,5 +1,7 @@
 package com.app.replace.ui.coupleconnection
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.viewModels
@@ -10,6 +12,7 @@ import com.app.replace.ui.common.makeSnackbar
 import com.app.replace.ui.common.setOnSingleClickListener
 import com.app.replace.ui.common.showNetworkErrorMessage
 import com.app.replace.ui.common.showUnexpectedErrorMessage
+import com.app.replace.ui.inputcode.InputCodeActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -87,5 +90,12 @@ class CoupleConnectionActivity : AppCompatActivity() {
     }
 
     private fun navigateToInputConnectionCode() {
+        startActivity(InputCodeActivity.newIntent(this))
+    }
+
+    companion object {
+        fun newIntent(context: Context): Intent {
+            return Intent(context, CoupleConnectionActivity::class.java)
+        }
     }
 }
