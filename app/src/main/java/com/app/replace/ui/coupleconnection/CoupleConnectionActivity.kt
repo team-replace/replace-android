@@ -1,5 +1,7 @@
 package com.app.replace.ui.coupleconnection
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.viewModels
@@ -87,5 +89,11 @@ class CoupleConnectionActivity : AppCompatActivity() {
     }
 
     private fun navigateToInputConnectionCode() {
+    }
+
+    companion object {
+        fun newIntent(context: Context): Intent {
+            return Intent(context, CoupleConnectionActivity::class.java)
+        }
     }
 }
