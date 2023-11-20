@@ -13,7 +13,9 @@ import com.app.replace.ui.main.bookmark.BookmarkFragment
 import com.app.replace.ui.main.diary.DiaryFragment
 import com.app.replace.ui.main.home.HomeFragment
 import com.app.replace.ui.main.mypage.MypageFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val fragments = mapOf(
@@ -33,8 +35,12 @@ class MainActivity : AppCompatActivity() {
     ) { permissions ->
         permissions.entries.forEach { entry ->
             val isGranted = entry.value
-            if(!isGranted) {
-                ActivityCompat.requestPermissions(this, PERMISSIONS, LOCATION_PERMISSION_REQUEST_CODE)
+            if (!isGranted) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    PERMISSIONS,
+                    LOCATION_PERMISSION_REQUEST_CODE,
+                )
             }
         }
     }
