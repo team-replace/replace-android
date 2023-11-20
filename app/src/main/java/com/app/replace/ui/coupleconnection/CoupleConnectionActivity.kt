@@ -12,6 +12,7 @@ import com.app.replace.ui.common.makeSnackbar
 import com.app.replace.ui.common.setOnSingleClickListener
 import com.app.replace.ui.common.showNetworkErrorMessage
 import com.app.replace.ui.common.showUnexpectedErrorMessage
+import com.app.replace.ui.inputcode.InputCodeActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -89,6 +90,7 @@ class CoupleConnectionActivity : AppCompatActivity() {
     }
 
     private fun navigateToInputConnectionCode() {
+        startActivity(InputCodeActivity.newIntent(this))
     }
 
     companion object {
