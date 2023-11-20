@@ -19,6 +19,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:elevation="8dp"
         android:background="@drawable/bg_ffffff_bottom_radius_15dp">
 
         <androidx.constraintlayout.widget.Guideline

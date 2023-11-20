@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <variable
             name="listener"
             type="com.app.replace.ui.main.mypage.listener.MypageListener" />
@@ -17,6 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_ffffff_radius_15dp"
+        android:elevation="8dp"
         android:paddingVertical="15dp">
 
         <TextView
@@ -40,11 +43,11 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:gravity="center_vertical"
+            android:onClick="@{() -> listener.coupleConnectClick()}"
             android:text="@string/mypage_setting_couple_connect"
             android:textColor="@color/black_000000"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:onClick="@{() -> listener.coupleConnectClick()}"
             android:visibility="@{isSolo ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintDimensionRatio="H,360:44"
             app:layout_constraintEnd_toEndOf="parent"
@@ -57,11 +60,11 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:gravity="center_vertical"
+            android:onClick="@{() -> listener.coupleDisConnectClick()}"
             android:text="@string/mypage_setting_couple_disconnect"
             android:textColor="@color/black_000000"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:onClick="@{() -> listener.coupleDisConnectClick()}"
             android:visibility="@{isSolo ? View.INVISIBLE : View.VISIBLE}"
             app:layout_constraintDimensionRatio="H,360:44"
             app:layout_constraintEnd_toEndOf="parent"
