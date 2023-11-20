@@ -1,87 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/bg_ffffff_radius_15dp"
-    android:paddingVertical="15dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/tv_profile_update"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:gravity="center_vertical"
-        android:text="@string/mypage_setting_profile_update"
-        android:textColor="@color/black_000000"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintDimensionRatio="H,360:44"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.87" />
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="listener"
+            type="com.app.replace.ui.main.mypage.listener.MypageListener" />
 
-    <TextView
-        android:id="@+id/tv_couple_connection"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:gravity="center_vertical"
-        android:text="@string/mypage_setting_couple_connect"
-        android:textColor="@color/black_000000"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintDimensionRatio="H,360:44"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_profile_update"
-        app:layout_constraintWidth_percent="0.87" />
+        <variable
+            name="isSolo"
+            type="Boolean" />
+    </data>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_ffffff_radius_15dp"
+        android:paddingVertical="15dp">
 
-    <TextView
-        android:id="@+id/tv_push_alarm"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:gravity="center_vertical"
-        android:text="@string/mypage_setting_push_alarm"
-        android:textColor="@color/black_000000"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintDimensionRatio="H,360:44"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_couple_connection"
-        app:layout_constraintWidth_percent="0.87" />
+        <TextView
+            android:id="@+id/tv_profile_update"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center_vertical"
+            android:onClick="@{() -> listener.profileUpdateClick()}"
+            android:text="@string/mypage_setting_profile_update"
+            android:textColor="@color/black_000000"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintDimensionRatio="H,360:44"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.87" />
 
+        <TextView
+            android:id="@+id/tv_couple_connect"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center_vertical"
+            android:text="@string/mypage_setting_couple_connect"
+            android:textColor="@color/black_000000"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:onClick="@{() -> listener.coupleConnectClick()}"
+            android:visibility="@{isSolo ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintDimensionRatio="H,360:44"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_profile_update"
+            app:layout_constraintWidth_percent="0.87" />
 
-    <TextView
-        android:id="@+id/tv_logout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:gravity="center_vertical"
-        android:text="@string/mypage_setting_logout"
-        android:textColor="@color/black_000000"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintDimensionRatio="H,360:44"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_push_alarm"
-        app:layout_constraintWidth_percent="0.87" />
-
-    <TextView
-        android:id="@+id/tv_withdraw"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:gravity="center_vertical"
-        android:text="@string/mypage_setting_withdraw"
-        android:textColor="@color/black_000000"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintDimensionRatio="H,360:44"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_logout"
-        app:layout_constraintWidth_percent="0.87" />
+        <TextView
+            android:id="@+id/tv_couple_disconnect"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center_vertical"
+            android:text="@string/mypage_setting_couple_disconnect"
+            android:textColor="@color/black_000000"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:onClick="@{() -> listener.coupleDisConnectClick()}"
+            android:visibility="@{isSolo ? View.INVISIBLE : View.VISIBLE}"
+            app:layout_constraintDimensionRatio="H,360:44"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_profile_update"
+            app:layout_constraintWidth_percent="0.87" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tv_push_alarm"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center_vertical"
+            android:onClick="@{() -> listener.pushAlarmClick()}"
+            android:text="@string/mypage_setting_push_alarm"
+            android:textColor="@color/black_000000"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintDimensionRatio="H,360:44"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_couple_connect"
+            app:layout_constraintWidth_percent="0.87" />
+
+
+        <TextView
+            android:id="@+id/tv_logout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center_vertical"
+            android:onClick="@{() -> listener.logoutClick()}"
+            android:text="@string/mypage_setting_logout"
+            android:textColor="@color/black_000000"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintDimensionRatio="H,360:44"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_push_alarm"
+            app:layout_constraintWidth_percent="0.87" />
+
+        <TextView
+            android:id="@+id/tv_withdraw"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center_vertical"
+            android:onClick="@{() -> listener.withdrawClick()}"
+            android:text="@string/mypage_setting_withdraw"
+            android:textColor="@color/black_000000"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintDimensionRatio="H,360:44"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_logout"
+            app:layout_constraintWidth_percent="0.87" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
