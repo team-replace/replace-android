@@ -84,9 +84,21 @@ class CoupleConnectionActivity : AppCompatActivity() {
     }
 
     private fun setListener() {
+        binding.tvShareCode.setOnSingleClickListener {
+            sendKakao()
+        }
+
         binding.tvInputConnectionCode.setOnSingleClickListener {
             navigateToInputConnectionCode()
         }
+    }
+
+    private fun sendKakao() {
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "text/plain"
+        intent.putExtra(Intent.EXTRA_TEXT, binding.tvReplaceCode.text)
+        intent.`package` = "com.kakao.talk"
+        startActivity(intent)
     }
 
     private fun navigateToInputConnectionCode() {
