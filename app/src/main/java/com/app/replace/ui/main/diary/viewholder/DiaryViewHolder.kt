@@ -9,12 +9,14 @@ import com.app.replace.ui.model.DiaryUiModel
 
 class DiaryViewHolder private constructor(
     val binding: ItemDiaryWithProfileBinding,
+    private val onClick: (Long) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
 
     private lateinit var diaryContentAdapter: DiaryContentAdapter
 
     fun bind(diary: DiaryUiModel) {
-        diaryContentAdapter = DiaryContentAdapter.from(diary)
+        binding.diary = diary
+        diaryContentAdapter = DiaryContentAdapter.from(diary, onClick)
         binding.rvDiary.adapter = diaryContentAdapter
         diaryContentAdapter.submitList(diary.contents)
     }
@@ -22,13 +24,14 @@ class DiaryViewHolder private constructor(
     companion object {
         fun from(
             parent: ViewGroup,
+            onClick: (Long) -> Unit,
         ): DiaryViewHolder {
             val binding = ItemDiaryWithProfileBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false,
             )
-            return DiaryViewHolder(binding)
+            return DiaryViewHolder(binding, onClick)
         }
     }
 }

@@ -29,7 +29,8 @@
         <activity
             android:name=".ui.diaryeditor.DiaryEditorActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="true">

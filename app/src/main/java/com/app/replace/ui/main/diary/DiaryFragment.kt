@@ -9,6 +9,9 @@ import androidx.fragment.app.viewModels
 import com.app.replace.R
 import com.app.replace.databinding.FragmentDiaryBinding
 import com.app.replace.ui.common.makeSnackbar
+import com.app.replace.ui.common.showNetworkErrorMessage
+import com.app.replace.ui.common.showUnexpectedErrorMessage
+import com.app.replace.ui.diarydetail.DiaryDetailActivity
 import com.app.replace.ui.main.diary.adapter.DiaryAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
@@ -21,7 +24,9 @@ class DiaryFragment : Fragment() {
     }
 
     private val diaryAdapter: DiaryAdapter by lazy {
-        DiaryAdapter()
+        DiaryAdapter { id ->
+            navigateToDetail(id)
+        }
     }
 
     private val viewModel: DiaryViewModel by viewModels()
@@ -64,7 +69,20 @@ class DiaryFragment : Fragment() {
         }
     }
 
-    private fun handleEvent(it: DiaryViewModel.DiaryEvent?) {
+    private fun handleEvent(event: DiaryViewModel.DiaryEvent?) {
+        when (event) {
+            is DiaryViewModel.DiaryEvent.ShowApiError -> {
+                binding.root.makeSnackbar(event.throwable.message)
+            }
+
+            is DiaryViewModel.DiaryEvent.ShowNetworkError -> {
+                binding.root.showNetworkErrorMessage(event.fetchState)
+            }
+
+            is DiaryViewModel.DiaryEvent.ShowUnexpectedError -> {
+                binding.root.showUnexpectedErrorMessage()
+            }
+        }
     }
 
     private fun handleDateSelection(year: Int, month: Int, dayOfMonth: Int) {
@@ -73,8 +91,9 @@ class DiaryFragment : Fragment() {
 
         if (selectedDate > currentDate) {
             showErrorAndSetCurrentDate()
+            viewModel.clearDiaries()
         } else {
-            viewModel.getDiariesWithDate(year, month, dayOfMonth)
+            viewModel.getDiariesWithDate(year, month + 1, dayOfMonth)
         }
     }
 
@@ -87,5 +106,9 @@ class DiaryFragment : Fragment() {
         val calendar = Calendar.getInstance()
         calendar.set(year, month, dayOfMonth)
         return calendar.timeInMillis
+    }
+
+    private fun navigateToDetail(diaryId: Long) {
+        startActivity(DiaryDetailActivity.newIntent(requireContext(), diaryId))
     }
 }
