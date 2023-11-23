@@ -9,6 +9,8 @@ import com.replace.data.common.FetchState
 
 fun View.makeSnackbar(message: String) {
     Snackbar.make(this, message, Snackbar.LENGTH_SHORT)
+        .setBackgroundTint(context.getColor(R.color.white_FFFFFF))
+        .setTextColor(context.getColor(R.color.gray_434343))
         .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE).show()
 }
 
