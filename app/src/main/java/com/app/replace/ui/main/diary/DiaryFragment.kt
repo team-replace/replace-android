@@ -14,6 +14,7 @@ import com.app.replace.ui.common.showUnexpectedErrorMessage
 import com.app.replace.ui.diarydetail.DiaryDetailActivity
 import com.app.replace.ui.main.diary.adapter.DiaryAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDate
 import java.util.Calendar
 
 @AndroidEntryPoint
@@ -31,10 +32,6 @@ class DiaryFragment : Fragment() {
 
     private val viewModel: DiaryViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -46,12 +43,18 @@ class DiaryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setAdapter()
+        setTodayDiaries()
         setListener()
         setObserver()
     }
 
     private fun setAdapter() {
         binding.rvDiaryWithProfile.adapter = diaryAdapter
+    }
+
+    private fun setTodayDiaries() {
+        val today = LocalDate.now()
+        viewModel.getDiariesWithDate(today.year, today.monthValue, today.dayOfMonth)
     }
 
     private fun setObserver() {
@@ -82,6 +85,8 @@ class DiaryFragment : Fragment() {
             is DiaryViewModel.DiaryEvent.ShowUnexpectedError -> {
                 binding.root.showUnexpectedErrorMessage()
             }
+
+            else -> {}
         }
     }
 
@@ -91,7 +96,7 @@ class DiaryFragment : Fragment() {
 
         if (selectedDate > currentDate) {
             showErrorAndSetCurrentDate()
-            viewModel.clearDiaries()
+            setTodayDiaries()
         } else {
             viewModel.getDiariesWithDate(year, month + 1, dayOfMonth)
         }
