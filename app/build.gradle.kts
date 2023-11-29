@@ -86,4 +86,7 @@ dependencies {
     // hilt
     implementation("com.google.dagger:hilt-android:2.48")
     kapt("com.google.dagger:hilt-android-compiler:2.48")
+
+    // lottie 애니메이션
+    implementation("com.airbnb.android:lottie:5.0.2")
 }
