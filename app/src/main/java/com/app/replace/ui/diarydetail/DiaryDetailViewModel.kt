@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.replace.ui.common.SingleLiveEvent
 import com.app.replace.ui.common.mapper.toUi
-import com.app.replace.ui.model.DiaryUiModel
+import com.app.replace.ui.model.DiaryDetailUiModel
 import com.replace.data.common.CustomThrowable
 import com.replace.data.common.FetchState
 import com.replace.data.remote.CustomResult
@@ -20,8 +20,8 @@ class DiaryDetailViewModel @Inject constructor(
     private val diaryRepository: DiaryRepository,
 ) : ViewModel() {
 
-    private val _diary = MutableLiveData<DiaryUiModel>()
-    val diary: LiveData<DiaryUiModel> get() = _diary
+    private val _diary = MutableLiveData<DiaryDetailUiModel>()
+    val diary: LiveData<DiaryDetailUiModel> get() = _diary
 
     private val _event: SingleLiveEvent<DiaryDetailEvent> = SingleLiveEvent()
     val event: LiveData<DiaryDetailEvent>

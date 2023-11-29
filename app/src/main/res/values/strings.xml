@@ -49,6 +49,12 @@
     <string name="input_code_hint_message">상대방의 코드를 입력해주세요</string>
     <string name="input_ok_message">완료</string>
 
+    <!-- diary fragment -->
+    <string name="diary_title">우리의 일기장</string>
+    <string name="diary_title_with_profile">의 일기</string>
+    <string name="date_error_message">날짜 선택은 현재 날짜 이전만 가능합니다.</string>
+    <string name="image_remain_count">+%d</string>
+
     <!-- my page fragment -->
     <string name="mypage_title">마이페이지</string>
     <string name="mypage_setting_profile_update">회원 정보 수정</string>

@@ -2,6 +2,7 @@ package com.replace.data.repository.diary
 
 import com.replace.data.datasource.diary.DiaryDataSource
 import com.replace.data.model.request.DiaryEditorRequest
+import com.replace.data.model.response.DiariesResponse
 import com.replace.data.model.response.DiaryDetailResponse
 import com.replace.data.model.response.DiaryEditorImageResponse
 import com.replace.data.remote.CustomResult
@@ -43,5 +44,13 @@ class DefaultDiaryRepository @Inject constructor(
 
     override suspend fun getDiaryDetail(diaryId: Long): CustomResult<DiaryDetailResponse> {
         return diaryDataSource.getDiaryDetail(diaryId)
+    }
+
+    override suspend fun getDiariesWithDate(
+        year: Int,
+        month: Int,
+        day: Int,
+    ): CustomResult<DiariesResponse> {
+        return diaryDataSource.getDiariesWithDate(year, month, day)
     }
 }

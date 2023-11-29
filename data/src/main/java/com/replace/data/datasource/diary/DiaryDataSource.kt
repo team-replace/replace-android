@@ -1,6 +1,7 @@
 package com.replace.data.datasource.diary
 
 import com.replace.data.model.request.DiaryEditorRequest
+import com.replace.data.model.response.DiariesResponse
 import com.replace.data.model.response.DiaryDetailResponse
 import com.replace.data.model.response.DiaryEditorImageResponse
 import com.replace.data.remote.CustomResult
@@ -27,4 +28,10 @@ interface DiaryDataSource {
     suspend fun getDiaryDetail(
         diaryId: Long,
     ): CustomResult<DiaryDetailResponse>
+
+    suspend fun getDiariesWithDate(
+        year: Int,
+        month: Int,
+        day: Int,
+    ): CustomResult<DiariesResponse>
 }

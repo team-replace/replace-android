@@ -17,7 +17,7 @@ import com.app.replace.ui.common.showNetworkErrorMessage
 import com.app.replace.ui.common.showUnexpectedErrorMessage
 import com.app.replace.ui.diarydetail.DiaryDetailActivity
 import com.app.replace.ui.diaryeditor.adapter.DiaryEditorImageAdapter
-import com.app.replace.ui.model.DiaryUiModel
+import com.app.replace.ui.model.DiaryDetailUiModel
 import com.app.replace.ui.model.ShareScope
 import dagger.hilt.android.AndroidEntryPoint
 import gun0912.tedimagepicker.builder.TedImagePicker
@@ -45,8 +45,8 @@ class DiaryEditorActivity : AppCompatActivity() {
         intent.getIntExtra(KEY_DIARY_EDITOR_CHECK, 0)
     }
 
-    private val diary: DiaryUiModel? by lazy {
-        intent.getParcelableExtraCompat(KEY_DIARY_EDITOR_DIARY) as? DiaryUiModel
+    private val diary: DiaryDetailUiModel? by lazy {
+        intent.getParcelableExtraCompat(KEY_DIARY_EDITOR_DIARY) as? DiaryDetailUiModel
     }
 
     private val loadingDialog: LoadingDialog by lazy {
@@ -206,7 +206,7 @@ class DiaryEditorActivity : AppCompatActivity() {
             }
         }
 
-        fun newIntent(context: Context, diary: DiaryUiModel, code: Int): Intent {
+        fun newIntent(context: Context, diary: DiaryDetailUiModel, code: Int): Intent {
             return Intent(context, DiaryEditorActivity::class.java).apply {
                 putExtra(KEY_DIARY_EDITOR_CHECK, code)
                 putExtra(KEY_DIARY_EDITOR_DIARY, diary)

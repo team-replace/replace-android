@@ -1,4 +1,4 @@
-package com.app.replace.ui.diaryeditor.adapter
+package com.app.replace.ui.common
 
 import androidx.recyclerview.widget.DiffUtil
 
