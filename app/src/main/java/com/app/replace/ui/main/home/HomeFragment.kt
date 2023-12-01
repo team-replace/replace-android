@@ -79,7 +79,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    private fun handleEvent(event: HomeViewModel.HomeEvent?) {
+    private fun handleEvent(event: HomeViewModel.HomeEvent) {
         when (event) {
             is HomeViewModel.HomeEvent.ShowApiError -> {
                 binding.root.makeSnackbar(event.throwable.message)
