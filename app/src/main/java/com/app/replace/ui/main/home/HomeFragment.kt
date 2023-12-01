@@ -5,8 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.app.replace.R
 import com.app.replace.databinding.FragmentHomeBinding
+import com.app.replace.ui.common.makeSnackbar
+import com.app.replace.ui.common.showNetworkErrorMessage
+import com.app.replace.ui.common.showUnexpectedErrorMessage
 import com.app.replace.ui.main.MainActivity.Companion.LOCATION_PERMISSION_REQUEST_CODE
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.MapFragment
@@ -15,14 +19,26 @@ import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : Fragment(), OnMapReadyCallback {
 
     private val binding: FragmentHomeBinding by lazy {
         FragmentHomeBinding.inflate(layoutInflater)
     }
 
+    private val viewModel: HomeViewModel by viewModels()
+
     private lateinit var locationSource: FusedLocationSource
+
+    private lateinit var currentLatLng: LatLng
+
+    private lateinit var naverMap: NaverMap
+
+    private val currentMarker by lazy {
+        createMarker()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,6 +52,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         super.onViewCreated(view, savedInstanceState)
         setMap()
         setLocationSource()
+        setObserver()
     }
 
     private fun setMap() {
@@ -51,7 +68,35 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
     }
 
+    private fun setObserver() {
+        viewModel.placeInfo.observe(viewLifecycleOwner) {
+            currentMarker.position = currentLatLng
+            currentMarker.map = naverMap
+        }
+
+        viewModel.event.observe(viewLifecycleOwner) {
+            handleEvent(it)
+        }
+    }
+
+    private fun handleEvent(event: HomeViewModel.HomeEvent?) {
+        when (event) {
+            is HomeViewModel.HomeEvent.ShowApiError -> {
+                binding.root.makeSnackbar(event.throwable.message)
+            }
+
+            is HomeViewModel.HomeEvent.ShowNetworkError -> {
+                binding.root.showNetworkErrorMessage(event.fetchState)
+            }
+
+            is HomeViewModel.HomeEvent.ShowUnexpectedError -> {
+                binding.root.showUnexpectedErrorMessage()
+            }
+        }
+    }
+
     override fun onMapReady(naverMap: NaverMap) {
+        this.naverMap = naverMap
         naverMap.locationSource = locationSource
         naverMap.setMapSetting()
         naverMap.onMapClick()
@@ -63,12 +108,9 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun NaverMap.onMapClick() {
-        val marker = createMarker()
-
         this.setOnMapClickListener { _, latLng ->
-            // 이 위치에 주소와 건물명이 있는지 확인 후 있다면 마커 놓을 수 있게
-            marker.position = latLng
-            marker.map = this
+            currentLatLng = latLng
+            viewModel.getPlaceInfo(latLng.longitude.toString(), latLng.latitude.toString())
         }
     }
 

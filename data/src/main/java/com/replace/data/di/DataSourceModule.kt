@@ -4,6 +4,8 @@ import com.replace.data.datasource.connection.ConnectionDataSource
 import com.replace.data.datasource.connection.ConnectionRemoteDataSource
 import com.replace.data.datasource.diary.DiaryDataSource
 import com.replace.data.datasource.diary.DiaryRemoteDataSource
+import com.replace.data.datasource.map.MapDataSource
+import com.replace.data.datasource.map.MapRemoteDataSource
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -25,4 +27,10 @@ abstract class DataSourceModule {
     abstract fun bindConnectionDataSource(
         remoteDataSource: ConnectionRemoteDataSource,
     ): ConnectionDataSource
+
+    @Singleton
+    @Binds
+    abstract fun bindMapDataSource(
+        remoteDataSource: MapRemoteDataSource,
+    ): MapDataSource
 }

@@ -2,6 +2,7 @@ package com.replace.data.di
 
 import com.replace.data.service.ConnectionService
 import com.replace.data.service.DiaryService
+import com.replace.data.service.MapService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,5 +28,13 @@ object ServiceModule {
         retrofit: Retrofit,
     ): ConnectionService {
         return retrofit.create(ConnectionService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideMapService(
+        retrofit: Retrofit,
+    ): MapService {
+        return retrofit.create(MapService::class.java)
     }
 }
