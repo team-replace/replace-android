@@ -54,4 +54,7 @@
     <string name="diary_title_with_profile">의 일기</string>
     <string name="date_error_message">날짜 선택은 현재 날짜 이전만 가능합니다.</string>
     <string name="image_remain_count">+%d</string>
+
+    <!-- home fragment -->
+    <string name="write_diary">일기 작성하기</string>
 </resources>
