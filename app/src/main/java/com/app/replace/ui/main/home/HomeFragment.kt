@@ -12,6 +12,7 @@ import com.app.replace.ui.common.makeSnackbar
 import com.app.replace.ui.common.showNetworkErrorMessage
 import com.app.replace.ui.common.showUnexpectedErrorMessage
 import com.app.replace.ui.main.MainActivity.Companion.LOCATION_PERMISSION_REQUEST_CODE
+import com.app.replace.ui.model.CoordinateUiModel
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
@@ -53,6 +54,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         setMap()
         setLocationSource()
         setObserver()
+        getDiaryCoordinates()
     }
 
     private fun setMap() {
@@ -77,9 +79,13 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         viewModel.event.observe(viewLifecycleOwner) {
             handleEvent(it)
         }
+
+        viewModel.diaryCoordinates.observe(viewLifecycleOwner) {
+            setDiariesMarker(it)
+        }
     }
 
-    private fun handleEvent(event: HomeViewModel.HomeEvent?) {
+    private fun handleEvent(event: HomeViewModel.HomeEvent) {
         when (event) {
             is HomeViewModel.HomeEvent.ShowApiError -> {
                 binding.root.makeSnackbar(event.throwable.message)
@@ -92,6 +98,20 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
             is HomeViewModel.HomeEvent.ShowUnexpectedError -> {
                 binding.root.showUnexpectedErrorMessage()
             }
+        }
+    }
+
+    private fun getDiaryCoordinates() {
+        viewModel.getDiaryCoordinates()
+    }
+
+    private fun setDiariesMarker(diaryCoordinates: List<CoordinateUiModel>) {
+        val markers = arrayOfNulls<Marker>(diaryCoordinates.size)
+        diaryCoordinates.forEachIndexed { index, it ->
+            markers[index] = Marker()
+            markers[index]?.icon = OverlayImage.fromResource(R.drawable.ic_diary_marker)
+            markers[index]?.position = LatLng(it.latitude.toDouble(), it.longitude.toDouble())
+            markers[index]?.map = naverMap
         }
     }
 
