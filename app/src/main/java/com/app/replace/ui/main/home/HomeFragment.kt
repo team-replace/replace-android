@@ -13,6 +13,7 @@ import com.app.replace.ui.common.showNetworkErrorMessage
 import com.app.replace.ui.common.showUnexpectedErrorMessage
 import com.app.replace.ui.main.MainActivity.Companion.LOCATION_PERMISSION_REQUEST_CODE
 import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
@@ -79,8 +80,12 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    private fun handleEvent(event: HomeViewModel.HomeEvent?) {
+    private fun handleEvent(event: HomeViewModel.HomeEvent) {
         when (event) {
+            is HomeViewModel.HomeEvent.UnKnownPlace -> {
+                currentMarker.map = null
+            }
+
             is HomeViewModel.HomeEvent.ShowApiError -> {
                 binding.root.makeSnackbar(event.throwable.message)
             }
@@ -111,7 +116,13 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         this.setOnMapClickListener { _, latLng ->
             currentLatLng = latLng
             viewModel.getPlaceInfo(latLng.longitude.toString(), latLng.latitude.toString())
+            setCameraPosition(latLng)
         }
+    }
+
+    private fun NaverMap.setCameraPosition(latLng: LatLng) {
+        val cameraUpdate = CameraUpdate.scrollTo(latLng)
+        this.moveCamera(cameraUpdate)
     }
 
     private fun createMarker(): Marker {
