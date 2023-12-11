@@ -4,6 +4,7 @@ import com.app.replace.ui.model.DateUiModel
 import com.app.replace.ui.model.DiaryContentUiModel
 import com.app.replace.ui.model.DiaryDetailUiModel
 import com.app.replace.ui.model.DiaryUiModel
+import com.app.replace.ui.model.PlaceDiaryUiModel
 import com.replace.data.model.response.DiaryContentResponse
 import com.replace.data.model.response.DiaryDetailResponse
 import com.replace.data.model.response.DiaryResponse
@@ -32,4 +33,14 @@ fun DiaryContentResponse.toUi(): DiaryContentUiModel {
 
 fun DiaryResponse.toUi(): DiaryUiModel {
     return DiaryUiModel(user = this.user.toUi(), contents = this.contents.map { it.toUi() })
+}
+
+fun PlaceDiaryUiModel.toDiaryContentUiModel(): DiaryContentUiModel {
+    return DiaryContentUiModel(
+        id = this.id,
+        title = this.title,
+        thumbnails = this.thumbnails,
+        numOfExtraThumbnails = this.numOfExtraThumbnails,
+        createdAt = this.createdAt,
+    )
 }

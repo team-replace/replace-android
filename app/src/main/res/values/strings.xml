@@ -71,4 +71,5 @@
 
     <!-- home fragment -->
     <string name="write_diary">일기 작성하기</string>
+    <string name="home_fragment_empty_our_diaries_title">우리의 일기장을 채워보아요\n추억을 기록해보세요</string>
 </resources>

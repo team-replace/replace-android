@@ -1,61 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <Space
-        android:id="@+id/space_title_top"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="H,360:60"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
+        <variable
+            name="writeDiary"
+            type="kotlin.jvm.functions.Function0" />
+    </data>
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="우리의 일기장을 채워보아요\n추억을 기록해보세요"
-        android:textColor="@color/green_9ECEB4"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/space_title_top" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <Space
-        android:id="@+id/space_title_bottom"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="H, 360:20"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+        <Space
+            android:id="@+id/space_title_top"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="H,360:60"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_write_diary"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="@string/write_diary"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:textColor="@color/green_9ECEB4"
-        app:layout_constraintDimensionRatio="100:28"
-        app:layout_constraintWidth_percent="0.2777"
-        app:layout_constraintEnd_toEndOf="@+id/space_title_bottom"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/space_title_bottom"
-        android:background="@drawable/bg_stroke_9eceb4_radius_10dp_width_1dp"/>
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/home_fragment_empty_our_diaries_title"
+            android:textColor="@color/green_9ECEB4"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/space_title_top" />
 
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_write_diary"
-        app:layout_constraintDimensionRatio="H,360:40"/>
+        <Space
+            android:id="@+id/space_title_bottom"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="H, 360:20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_write_diary"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_stroke_9eceb4_radius_10dp_width_1dp"
+            android:text="@string/write_diary"
+            android:textColor="@color/green_9ECEB4"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:onClick="@{() -> writeDiary.invoke()}"
+            app:layout_constraintDimensionRatio="100:28"
+            app:layout_constraintEnd_toEndOf="@+id/space_title_bottom"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/space_title_bottom"
+            app:layout_constraintWidth_percent="0.2777" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="H,360:40"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_write_diary" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

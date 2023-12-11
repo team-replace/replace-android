@@ -4,6 +4,19 @@
     xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="placeInfo"
+            type="com.app.replace.ui.model.PlaceInfoUiModel" />
+
+        <variable
+            name="writeDiary"
+            type="kotlin.jvm.functions.Function0" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_bottom_sheet"
         android:layout_width="match_parent"
@@ -33,6 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:text="@{placeInfo.place.spotName}"
                 android:textColor="@color/black_000000"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -46,6 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="24dp"
+            android:text="@{placeInfo.place.spotName}"
             android:textColor="@color/black_000000"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -69,6 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:maxLines="2"
+            android:text="@{placeInfo.place.roadAddress}"
             android:textColor="@color/black_000000"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -93,23 +109,28 @@
             app:layout_constraintGuide_end="20dp" />
 
         <include
+            android:id="@+id/view_empty_our_diaries"
             layout="@layout/view_empty_our_diaries"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:visibility="@{placeInfo.coupleDiaries.empty ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintBottom_toBottomOf="@+id/view_couple_diaries"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/space_address_bottom" />
+            app:layout_constraintTop_toBottomOf="@+id/space_address_bottom"
+            bind:writeDiary="@{writeDiary}" />
 
         <include
             android:id="@+id/view_couple_diaries"
             layout="@layout/view_diaries"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:visibility="@{placeInfo.coupleDiaries.empty ? View.INVISIBLE : View.VISIBLE}"
             app:layout_constraintDimensionRatio="H,360:200"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/space_address_bottom"
+            bind:placeInfo="@{placeInfo}"
             bind:title="우리의 일기장" />
 
         <Space
@@ -130,6 +151,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/space_middle"
+            bind:placeInfo="@{placeInfo}"
             bind:title="전체 일기장" />
 
 

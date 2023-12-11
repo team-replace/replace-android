@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+    
+    <data>
+        <variable
+            name="placeInfo"
+            type="com.app.replace.ui.model.PlaceInfoUiModel" />
+        <variable
+            name="writeDiary"
+            type="kotlin.jvm.functions.Function0" />
+    </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -44,6 +54,8 @@
 
         <include
             android:id="@+id/view_main_bottom_sheet"
+            bind:placeInfo = "@{placeInfo}"
+            bind:writeDiary = "@{writeDiary}"
             layout="@layout/dialog_bottom_map" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
