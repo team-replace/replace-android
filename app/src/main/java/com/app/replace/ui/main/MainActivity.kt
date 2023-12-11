@@ -2,6 +2,7 @@ package com.app.replace.ui.main
 
 import android.Manifest
 import android.os.Bundle
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -16,7 +17,7 @@ import com.app.replace.ui.main.mypage.MypageFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), BottomNavigationListener {
 
     private val fragments = mapOf(
         FRAGMENT_HOME to HomeFragment(),
@@ -100,15 +101,23 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun hideBottomNavigation() {
+        binding.bnvMain.visibility = View.GONE
+    }
+
+    override fun showBottomNavigation() {
+        binding.bnvMain.visibility = View.VISIBLE
+    }
+
     companion object {
         private const val FRAGMENT_HOME = "home"
         private const val FRAGMENT_DIARY = "diary"
         private const val FRAGMENT_BOOKMARK = "bookmark"
         private const val FRAGMENT_ALARM = "alarm"
+
         private const val FRAGMENT_MYPAGE = "mypage"
 
         const val LOCATION_PERMISSION_REQUEST_CODE = 5000
-
         private val PERMISSIONS = arrayOf(
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_FINE_LOCATION,

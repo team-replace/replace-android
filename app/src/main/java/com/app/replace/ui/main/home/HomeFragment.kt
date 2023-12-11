@@ -1,5 +1,6 @@
 package com.app.replace.ui.main.home
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +12,12 @@ import com.app.replace.databinding.FragmentHomeBinding
 import com.app.replace.ui.common.makeSnackbar
 import com.app.replace.ui.common.showNetworkErrorMessage
 import com.app.replace.ui.common.showUnexpectedErrorMessage
+import com.app.replace.ui.diarydetail.DiaryDetailActivity
+import com.app.replace.ui.diaryeditor.DiaryEditorActivity
+import com.app.replace.ui.main.BottomNavigationListener
 import com.app.replace.ui.main.MainActivity.Companion.LOCATION_PERMISSION_REQUEST_CODE
+import com.app.replace.ui.main.home.adapter.PlaceDiaryAdapter
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
@@ -37,8 +43,37 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var naverMap: NaverMap
 
+    private var bottomNavigationListener: BottomNavigationListener? = null
+
     private val currentMarker by lazy {
         createMarker()
+    }
+
+    private val bottomSheetBehavior by lazy {
+        BottomSheetBehavior.from(binding.viewMainBottomSheet.clBottomSheet)
+    }
+
+    private val bottomSheetBinding by lazy {
+        binding.viewMainBottomSheet
+    }
+
+    private val ourDiaryAdapter by lazy {
+        PlaceDiaryAdapter { diaryId ->
+            navigateToDetail(diaryId)
+        }
+    }
+
+    private val allDiaryAdapter by lazy {
+        PlaceDiaryAdapter { diaryId ->
+            navigateToDetail(diaryId)
+        }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is BottomNavigationListener) {
+            bottomNavigationListener = context
+        }
     }
 
     override fun onCreateView(
@@ -46,14 +81,19 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
+        binding.writeDiary = { navigateToEditor() }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setMap()
+        initBottomSheet()
         setLocationSource()
         setObserver()
+        setBottomSheet()
+        setListener()
+        setAdapter()
     }
 
     private fun setMap() {
@@ -65,12 +105,20 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
     }
 
+    private fun initBottomSheet() {
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+    }
+
     private fun setLocationSource() {
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
     }
 
     private fun setObserver() {
         viewModel.placeInfo.observe(viewLifecycleOwner) {
+            binding.placeInfo = it
+            ourDiaryAdapter.submitList(it.coupleDiaries)
+            allDiaryAdapter.submitList(it.allDiaries)
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
             currentMarker.position = currentLatLng
             currentMarker.map = naverMap
         }
@@ -84,6 +132,8 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         when (event) {
             is HomeViewModel.HomeEvent.UnKnownPlace -> {
                 currentMarker.map = null
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+                bottomNavigationListener?.showBottomNavigation()
             }
 
             is HomeViewModel.HomeEvent.ShowApiError -> {
@@ -98,6 +148,52 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
                 binding.root.showUnexpectedErrorMessage()
             }
         }
+    }
+
+    private fun setBottomSheet() {
+        bottomSheetBehavior.addBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when (newState) {
+                    BottomSheetBehavior.STATE_COLLAPSED -> {
+                        bottomNavigationListener?.hideBottomNavigation()
+                        bottomSheetBinding.clBottomSheet.setBackgroundResource(R.drawable.bg_ffffff_radius_15dp)
+                        bottomSheetBinding.tbMain.visibility = View.GONE
+                        bottomSheetBinding.tvSpotName.visibility = View.VISIBLE
+                    }
+
+                    BottomSheetBehavior.STATE_HIDDEN -> {
+                        bottomNavigationListener?.showBottomNavigation()
+                    }
+
+                    BottomSheetBehavior.STATE_EXPANDED -> {
+                        bottomSheetBinding.clBottomSheet.setBackgroundResource(R.color.white_FFFFFF)
+                        bottomSheetBinding.tbMain.visibility = View.VISIBLE
+                        bottomSheetBinding.tvSpotName.visibility = View.INVISIBLE
+                    }
+
+                    BottomSheetBehavior.STATE_DRAGGING -> {
+                        bottomSheetBinding.clBottomSheet.setBackgroundResource(R.drawable.bg_ffffff_radius_15dp)
+                        bottomSheetBinding.tbMain.visibility = View.GONE
+                        bottomSheetBinding.tvSpotName.visibility = View.VISIBLE
+                    }
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+            }
+        })
+    }
+
+    private fun setListener() {
+        binding.viewMainBottomSheet.ivDown.setOnClickListener {
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        }
+    }
+
+    private fun setAdapter() {
+        bottomSheetBinding.viewCoupleDiaries.rvDiary.adapter = ourDiaryAdapter
+        bottomSheetBinding.viewAllDiaries.rvDiary.adapter = allDiaryAdapter
     }
 
     override fun onMapReady(naverMap: NaverMap) {
@@ -130,5 +226,23 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         marker.map = null
         marker.icon = OverlayImage.fromResource(R.drawable.ic_place_marker)
         return marker
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        bottomNavigationListener = null
+    }
+
+    private fun navigateToDetail(diaryId: Long) {
+        startActivity(DiaryDetailActivity.newIntent(requireContext(), diaryId))
+    }
+
+    private fun navigateToEditor() {
+        startActivity(
+            DiaryEditorActivity.newIntent(
+                requireActivity(),
+                DiaryEditorActivity.SAVE_CODE,
+            ),
+        )
     }
 }

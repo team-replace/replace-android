@@ -72,7 +72,7 @@ class DiaryFragment : Fragment() {
         }
     }
 
-    private fun handleEvent(event: DiaryViewModel.DiaryEvent?) {
+    private fun handleEvent(event: DiaryViewModel.DiaryEvent) {
         when (event) {
             is DiaryViewModel.DiaryEvent.ShowApiError -> {
                 binding.root.makeSnackbar(event.throwable.message)
@@ -85,8 +85,6 @@ class DiaryFragment : Fragment() {
             is DiaryViewModel.DiaryEvent.ShowUnexpectedError -> {
                 binding.root.showUnexpectedErrorMessage()
             }
-
-            else -> {}
         }
     }
 
