@@ -8,7 +8,7 @@ import retrofit2.http.Query
 interface MapService {
 
     @GET("/map")
-    fun getPlaceInfo(
+    suspend fun getPlaceInfo(
         @Query("longitude") longitude: String,
         @Query("latitude") latitude: String,
     ): CustomResult<PlaceInfoResponse>

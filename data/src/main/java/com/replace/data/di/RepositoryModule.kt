@@ -6,6 +6,8 @@ import com.replace.data.repository.diary.DefaultDiaryRepository
 import com.replace.data.repository.diary.DiaryRepository
 import com.replace.data.repository.map.DefaultMapRepository
 import com.replace.data.repository.map.MapRepository
+import com.replace.data.repository.profile.DefaultProfileRepository
+import com.replace.data.repository.profile.ProfileRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -27,6 +29,12 @@ abstract class RepositoryModule {
     abstract fun bindConnectionRepository(
         repository: DefaultConnectionRepository,
     ): ConnectionRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindProfileRepository(
+        repository: DefaultProfileRepository,
+    ): ProfileRepository
 
     @Singleton
     @Binds
