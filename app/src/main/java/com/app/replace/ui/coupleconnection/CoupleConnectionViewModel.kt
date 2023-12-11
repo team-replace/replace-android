@@ -28,7 +28,7 @@ class CoupleConnectionViewModel @Inject constructor(
         viewModelScope.launch {
             when (val response = connectionRepository.getConnectionCode()) {
                 is CustomResult.Success -> {
-                    _code.value = response.data
+                    _code.value = response.data.code
                 }
 
                 is CustomResult.ApiError -> {

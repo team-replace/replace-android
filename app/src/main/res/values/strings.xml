@@ -54,4 +54,18 @@
     <string name="diary_title_with_profile">의 일기</string>
     <string name="date_error_message">날짜 선택은 현재 날짜 이전만 가능합니다.</string>
     <string name="image_remain_count">+%d</string>
+
+    <!-- my page fragment -->
+    <string name="mypage_title">마이페이지</string>
+    <string name="mypage_setting_profile_update">회원 정보 수정</string>
+    <string name="mypage_setting_couple_connect">커플 연결하기</string>
+    <string name="mypage_setting_couple_disconnect">커플 연결 끊기</string>
+    <string name="mypage_setting_push_alarm">푸시 알림 설정</string>
+    <string name="mypage_setting_logout">로그아웃</string>
+    <string name="mypage_setting_withdraw">회원탈퇴</string>
+    <string name='mypage_preparing_feature'>준비 중인 기능입니다</string>
+    <string name="couple_disconnect_dialog_title">정말 연결을 끊으실건가요?</string>
+    <string name="couple_disconnect_dialog_content">끊기 버튼 선택 시, 서로의 계정은\n다시 연결될 수 없습니다.</string>
+    <string name="couple_disconnect_dialog_yes">연결 끊기</string>
+    <string name="couple_disconnect_dialog_no">취소</string>
 </resources>

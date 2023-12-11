@@ -25,8 +25,8 @@ object RetrofitModule {
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .addConverterFactory(Json.asConverterFactory(CONTENT_TYPE))
             .addCallAdapterFactory(ReplaceCallAdapterFactory())
+            .addConverterFactory(Json { ignoreUnknownKeys = true }.asConverterFactory(CONTENT_TYPE))
             .client(okHttpClient)
             .build()
     }
