@@ -10,6 +10,7 @@ class DiaryImageViewHolder private constructor(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(image: String) {
+        binding.url = image
     }
 
     companion object {

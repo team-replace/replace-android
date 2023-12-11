@@ -4,8 +4,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class DiaryContentResponse(
+data class PlaceDiaryResponse(
     @SerialName("id") val id: Long,
+    @SerialName("user") val user: WriterResponse,
     @SerialName("title") val title: String,
     @SerialName("thumbnails") val thumbnails: List<String>,
     @SerialName("numOfExtraThumbnails") val numOfExtraThumbnails: Int,

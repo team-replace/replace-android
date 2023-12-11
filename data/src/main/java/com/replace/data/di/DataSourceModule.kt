@@ -4,6 +4,8 @@ import com.replace.data.datasource.connection.ConnectionDataSource
 import com.replace.data.datasource.connection.ConnectionRemoteDataSource
 import com.replace.data.datasource.diary.DiaryDataSource
 import com.replace.data.datasource.diary.DiaryRemoteDataSource
+import com.replace.data.datasource.map.MapDataSource
+import com.replace.data.datasource.map.MapRemoteDataSource
 import com.replace.data.datasource.profile.ProfileDataSource
 import com.replace.data.datasource.profile.ProfileRemoteDataSource
 import dagger.Binds
@@ -33,4 +35,10 @@ abstract class DataSourceModule {
     abstract fun bindProfileDataSource(
         remoteDataSource: ProfileRemoteDataSource,
     ): ProfileDataSource
+
+    @Singleton
+    @Binds
+    abstract fun bindMapDataSource(
+        remoteDataSource: MapRemoteDataSource,
+    ): MapDataSource
 }

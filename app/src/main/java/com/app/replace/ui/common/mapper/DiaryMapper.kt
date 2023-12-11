@@ -22,6 +22,7 @@ fun DiaryDetailResponse.toUi(): DiaryDetailUiModel {
 
 fun DiaryContentResponse.toUi(): DiaryContentUiModel {
     return DiaryContentUiModel(
+        id = this.id,
         title = this.title,
         thumbnails = this.thumbnails,
         numOfExtraThumbnails = this.numOfExtraThumbnails,

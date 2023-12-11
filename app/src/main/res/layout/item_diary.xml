@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.view.View"/>
         <variable
             name="user"
             type="com.app.replace.ui.model.WriterUiModel" />
@@ -12,11 +12,16 @@
         <variable
             name="content"
             type="com.app.replace.ui.model.DiaryContentUiModel" />
+
+        <variable
+            name="onClick"
+            type="kotlin.jvm.functions.Function1" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> onClick.invoke(content.id)}">
 
         <Space
             android:id="@+id/space_nickname_top"
@@ -98,6 +103,7 @@
             android:textColor="@color/white_FFFFFF"
             android:textSize="16sp"
             android:textStyle="bold"
+            android:visibility="@{content.numOfExtraThumbnails == 0 ? View.INVISIBLE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@+id/rv_diary_image"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintStart_toEndOf="@+id/rv_diary_image"

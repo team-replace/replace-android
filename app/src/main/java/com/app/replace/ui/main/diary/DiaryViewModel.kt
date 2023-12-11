@@ -20,6 +20,7 @@ class DiaryViewModel @Inject constructor(
     private val diaryRepository: DiaryRepository,
 ) : ViewModel() {
 
+    private val _diaries2 = mutableListOf<DiaryUiModel>()
     private val _diaries = MutableLiveData<List<DiaryUiModel>>()
     val diaries: LiveData<List<DiaryUiModel>> get() = _diaries
 
@@ -29,7 +30,9 @@ class DiaryViewModel @Inject constructor(
         viewModelScope.launch {
             when (val response = diaryRepository.getDiariesWithDate(year, month, dayOfMonth)) {
                 is CustomResult.Success -> {
-                    _diaries.value = response.data.diaries.map { it.toUi() }
+                    _diaries2.clear()
+                    _diaries2.addAll(response.data.diaries.map { it.toUi() })
+                    _diaries.value = _diaries2.toList()
                 }
 
                 is CustomResult.ApiError -> {
@@ -49,6 +52,11 @@ class DiaryViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun clearDiaries() {
+        _diaries2.clear()
+        _diaries.value = _diaries2.toList()
     }
 
     sealed class DiaryEvent {

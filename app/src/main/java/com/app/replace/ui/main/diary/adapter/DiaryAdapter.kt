@@ -5,9 +5,11 @@ import androidx.recyclerview.widget.ListAdapter
 import com.app.replace.ui.main.diary.viewholder.DiaryViewHolder
 import com.app.replace.ui.model.DiaryUiModel
 
-class DiaryAdapter : ListAdapter<DiaryUiModel, DiaryViewHolder>(DiaryDiffUtilCallback) {
+class DiaryAdapter(
+    private val onClick: (Long) -> Unit,
+) : ListAdapter<DiaryUiModel, DiaryViewHolder>(DiaryDiffUtilCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DiaryViewHolder {
-        return DiaryViewHolder.from(parent)
+        return DiaryViewHolder.from(parent, onClick)
     }
 
     override fun onBindViewHolder(holder: DiaryViewHolder, position: Int) {

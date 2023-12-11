@@ -9,10 +9,11 @@ import com.app.replace.ui.model.WriterUiModel
 
 class DiaryContentAdapter private constructor(
     private val user: WriterUiModel,
+    private val onClick: (Long) -> Unit,
 ) :
     ListAdapter<DiaryContentUiModel, DiaryContentViewHolder>(DiaryContentDiffUtilCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DiaryContentViewHolder {
-        return DiaryContentViewHolder.from(parent, user)
+        return DiaryContentViewHolder.from(parent, user, onClick)
     }
 
     override fun onBindViewHolder(holder: DiaryContentViewHolder, position: Int) {
@@ -20,6 +21,6 @@ class DiaryContentAdapter private constructor(
     }
 
     companion object {
-        fun from(diary: DiaryUiModel): DiaryContentAdapter = DiaryContentAdapter(diary.user)
+        fun from(diary: DiaryUiModel, onClick: (Long) -> Unit): DiaryContentAdapter = DiaryContentAdapter(diary.user, onClick)
     }
 }
