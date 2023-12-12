@@ -42,6 +42,8 @@ class HomeViewModel @Inject constructor(
                 is CustomResult.ApiError -> {
                     if (!(response.customThrowable.code == 8000 || response.customThrowable.code == 8001)) {
                         _event.value = HomeEvent.ShowApiError(response.customThrowable)
+                    } else {
+                        _event.value = HomeEvent.UnKnownPlace
                     }
                 }
 
@@ -87,6 +89,7 @@ class HomeViewModel @Inject constructor(
     }
 
     sealed class HomeEvent {
+        object UnKnownPlace : HomeEvent()
         class ShowApiError(val throwable: CustomThrowable) : HomeEvent()
         class ShowNetworkError(val fetchState: FetchState) : HomeEvent()
         object ShowUnexpectedError : HomeEvent()
