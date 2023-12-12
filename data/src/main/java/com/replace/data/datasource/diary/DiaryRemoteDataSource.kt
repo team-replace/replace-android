@@ -1,6 +1,7 @@
 package com.replace.data.datasource.diary
 
 import com.replace.data.model.request.DiaryEditorRequest
+import com.replace.data.model.request.DiaryEditorSaveRequest
 import com.replace.data.model.response.DiariesResponse
 import com.replace.data.model.response.DiaryDetailResponse
 import com.replace.data.model.response.DiaryEditorImageResponse
@@ -15,8 +16,8 @@ import javax.inject.Inject
 class DiaryRemoteDataSource @Inject constructor(
     private val diaryService: DiaryService,
 ) : DiaryDataSource {
-    override suspend fun saveDiary(diaryEditorRequest: DiaryEditorRequest): CustomResult<Unit> {
-        return diaryService.saveDiary(diaryEditorRequest)
+    override suspend fun saveDiary(diaryEditorSaveRequest: DiaryEditorSaveRequest): CustomResult<Unit> {
+        return diaryService.saveDiary(diaryEditorSaveRequest)
     }
 
     override suspend fun saveDiaryImages(images: List<File>): CustomResult<DiaryEditorImageResponse> {

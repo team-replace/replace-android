@@ -17,6 +17,7 @@ import com.app.replace.ui.common.showNetworkErrorMessage
 import com.app.replace.ui.common.showUnexpectedErrorMessage
 import com.app.replace.ui.diarydetail.DiaryDetailActivity
 import com.app.replace.ui.diaryeditor.adapter.DiaryEditorImageAdapter
+import com.app.replace.ui.model.CoordinateUiModel
 import com.app.replace.ui.model.DiaryDetailUiModel
 import com.app.replace.ui.model.ShareScope
 import dagger.hilt.android.AndroidEntryPoint
@@ -52,6 +53,11 @@ class DiaryEditorActivity : AppCompatActivity() {
     private val loadingDialog: LoadingDialog by lazy {
         LoadingDialog(getString(R.string.loading_save_message))
     }
+
+    private val coordinate: CoordinateUiModel? by lazy {
+        intent.getParcelableExtraCompat(KEY_DIARY_EDITOR_COORDINATE) as? CoordinateUiModel
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -177,7 +183,7 @@ class DiaryEditorActivity : AppCompatActivity() {
         val diaryScope = getShareScope()
         loadingDialog.show(supportFragmentManager, LOADING_DIALOG_TAG)
         when (originActivityKey) {
-            SAVE_CODE -> viewModel.saveDiary(diaryTitle, diaryContent, diaryScope)
+            SAVE_CODE -> viewModel.saveDiary(diaryTitle, diaryContent, diaryScope, coordinate ?: CoordinateUiModel("", ""))
             UPDATE_CODE -> diary?.let { diary ->
                 viewModel.updateDiary(diary.id, diaryTitle, diaryContent, diaryScope)
             }
@@ -198,10 +204,12 @@ class DiaryEditorActivity : AppCompatActivity() {
         const val UPDATE_CODE = 3000
         private const val KEY_DIARY_EDITOR_CHECK = "key_diary_editor_check"
         private const val KEY_DIARY_EDITOR_DIARY = "key_diary_editor_diary"
+        private const val KEY_DIARY_EDITOR_COORDINATE = "key_diary_editor_coordinate"
         private const val LOADING_DIALOG_TAG = "loadingDialog"
 
-        fun newIntent(context: Context, code: Int): Intent {
+        fun newIntent(context: Context, coordinate: CoordinateUiModel, code: Int): Intent {
             return Intent(context, DiaryEditorActivity::class.java).apply {
+                putExtra(KEY_DIARY_EDITOR_COORDINATE, coordinate)
                 putExtra(KEY_DIARY_EDITOR_CHECK, code)
             }
         }

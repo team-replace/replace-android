@@ -1,7 +1,9 @@
 package com.replace.data.repository.diary
 
 import com.replace.data.datasource.diary.DiaryDataSource
+import com.replace.data.model.CoordinateDataModel
 import com.replace.data.model.request.DiaryEditorRequest
+import com.replace.data.model.request.DiaryEditorSaveRequest
 import com.replace.data.model.response.DiariesResponse
 import com.replace.data.model.response.DiaryDetailResponse
 import com.replace.data.model.response.DiaryEditorImageResponse
@@ -17,8 +19,9 @@ class DefaultDiaryRepository @Inject constructor(
         title: String,
         content: String,
         shareScope: String,
+        coordinateDataModel: CoordinateDataModel,
     ): CustomResult<Unit> {
-        return diaryDataSource.saveDiary(DiaryEditorRequest(images, title, content, shareScope))
+        return diaryDataSource.saveDiary(DiaryEditorSaveRequest(images, title, content, shareScope, coordinateDataModel))
     }
 
     override suspend fun saveDiaryImages(images: List<File>): CustomResult<DiaryEditorImageResponse> {
