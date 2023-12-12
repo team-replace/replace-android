@@ -17,6 +17,7 @@ import com.app.replace.ui.diaryeditor.DiaryEditorActivity
 import com.app.replace.ui.main.BottomNavigationListener
 import com.app.replace.ui.main.MainActivity.Companion.LOCATION_PERMISSION_REQUEST_CODE
 import com.app.replace.ui.main.home.adapter.PlaceDiaryAdapter
+import com.app.replace.ui.model.CoordinateUiModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
@@ -241,6 +242,10 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         startActivity(
             DiaryEditorActivity.newIntent(
                 requireActivity(),
+                CoordinateUiModel(
+                    currentLatLng.latitude.toString(),
+                    currentLatLng.longitude.toString(),
+                ),
                 DiaryEditorActivity.SAVE_CODE,
             ),
         )
