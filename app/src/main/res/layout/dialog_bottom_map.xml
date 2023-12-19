@@ -129,8 +129,7 @@
             app:layout_constraintDimensionRatio="H,360:200"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/space_address_bottom"
-            bind:title="우리의 일기장" />
+            app:layout_constraintTop_toBottomOf="@+id/space_address_bottom" />
 
         <Space
             android:id="@+id/space_middle"
@@ -146,11 +145,11 @@
             layout="@layout/view_diaries"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:visibility="@{placeInfo.allDiaries.empty ? View.INVISIBLE : View.VISIBLE}"
             app:layout_constraintBottom_toTopOf="@+id/guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/space_middle"
-            bind:title="전체 일기장" />
+            app:layout_constraintTop_toBottomOf="@+id/space_middle" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
