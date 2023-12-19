@@ -15,5 +15,5 @@ interface MapService {
     ): CustomResult<PlaceInfoResponse>
 
     @GET("/map/coordinate")
-    fun getDiaryCoordinates(): CustomResult<DiaryCoordinatesResponse>
+    suspend fun getDiaryCoordinates(): CustomResult<DiaryCoordinatesResponse>
 }
