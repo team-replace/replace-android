@@ -1,6 +1,7 @@
 package com.replace.data.datasource.diary
 
 import com.replace.data.model.request.DiaryEditorRequest
+import com.replace.data.model.request.DiaryEditorSaveRequest
 import com.replace.data.model.response.DiariesResponse
 import com.replace.data.model.response.DiaryDetailResponse
 import com.replace.data.model.response.DiaryEditorImageResponse
@@ -9,7 +10,7 @@ import java.io.File
 
 interface DiaryDataSource {
     suspend fun saveDiary(
-        diaryEditorRequest: DiaryEditorRequest,
+        diaryEditorSaveRequest: DiaryEditorSaveRequest,
     ): CustomResult<Unit>
 
     suspend fun saveDiaryImages(

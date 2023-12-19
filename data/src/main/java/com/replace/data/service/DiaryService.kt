@@ -1,6 +1,7 @@
 package com.replace.data.service
 
 import com.replace.data.model.request.DiaryEditorRequest
+import com.replace.data.model.request.DiaryEditorSaveRequest
 import com.replace.data.model.response.DiariesResponse
 import com.replace.data.model.response.DiaryDetailResponse
 import com.replace.data.model.response.DiaryEditorImageResponse
@@ -20,7 +21,7 @@ interface DiaryService {
 
     @POST("/diary")
     suspend fun saveDiary(
-        @Body diaryEditorRequest: DiaryEditorRequest,
+        @Body diaryEditorSaveRequest: DiaryEditorSaveRequest,
     ): CustomResult<Unit>
 
     @POST("/diary/images")
