@@ -45,7 +45,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var currentLatLng: LatLng
 
-    private lateinit var naverMap: NaverMap
+    private var naverMap: NaverMap? = null
 
     private var bottomNavigationListener: BottomNavigationListener? = null
 
@@ -109,6 +109,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         initBottomSheet()
         setLocationSource()
         setObserver()
+        getDiaryCoordinates()
         setBottomSheet()
         setListener()
         setAdapter()
@@ -181,6 +182,10 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
+    private fun getDiaryCoordinates() {
+        viewModel.getDiaryCoordinates()
+    }
+
     private fun setBottomSheet() {
         bottomSheetBehavior.addBottomSheetCallback(object :
             BottomSheetBehavior.BottomSheetCallback() {
@@ -237,6 +242,10 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         naverMap.locationSource = locationSource
         naverMap.setMapSetting()
         naverMap.onMapClick()
+
+        viewModel.diaryCoordinates.value?.let { coordinates ->
+            setDiariesMarker(coordinates)
+        }
     }
 
     private fun NaverMap.setMapSetting() {
@@ -256,6 +265,16 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
     private fun NaverMap.setCameraPosition(latLng: LatLng) {
         val cameraUpdate = CameraUpdate.scrollTo(latLng)
         this.moveCamera(cameraUpdate)
+    }
+
+    private fun setDiariesMarker(diaryCoordinates: List<CoordinateUiModel>) {
+        val markers = arrayOfNulls<Marker>(diaryCoordinates.size)
+        diaryCoordinates.forEachIndexed { index, it ->
+            markers[index] = Marker()
+            markers[index]?.icon = OverlayImage.fromResource(R.drawable.ic_diary_marker)
+            markers[index]?.position = LatLng(it.latitude.toDouble(), it.longitude.toDouble())
+            markers[index]?.map = naverMap
+        }
     }
 
     private fun createMarker(): Marker {

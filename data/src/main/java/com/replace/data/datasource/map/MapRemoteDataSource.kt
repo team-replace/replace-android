@@ -1,5 +1,6 @@
 package com.replace.data.datasource.map
 
+import com.replace.data.model.response.DiaryCoordinatesResponse
 import com.replace.data.model.response.PlaceInfoResponse
 import com.replace.data.remote.CustomResult
 import com.replace.data.service.MapService
@@ -13,5 +14,9 @@ class MapRemoteDataSource @Inject constructor(
         latitude: String,
     ): CustomResult<PlaceInfoResponse> {
         return mapService.getPlaceInfo(longitude, latitude)
+    }
+
+    override suspend fun getDiaryCoordinates(): CustomResult<DiaryCoordinatesResponse> {
+        return mapService.getDiaryCoordinates()
     }
 }
