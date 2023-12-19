@@ -120,12 +120,14 @@ class DiaryEditorActivity : AppCompatActivity() {
             is DiaryEditorViewModel.DiaryEditorEvent.SaveDiaryResult -> {
                 loadingDialog.dismiss()
                 navigateToDetail(event.diaryId)
+                setResult(RESULT_OK)
                 finish()
             }
 
             is DiaryEditorViewModel.DiaryEditorEvent.UpdateDiaryResult -> {
                 diary?.let {
                     navigateToDetail(it.id)
+                    setResult(RESULT_OK)
                     finish()
                 }
             }

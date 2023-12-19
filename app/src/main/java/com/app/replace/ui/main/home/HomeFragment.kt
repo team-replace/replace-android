@@ -1,10 +1,13 @@
 package com.app.replace.ui.main.home
 
+import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.app.replace.R
@@ -46,6 +49,8 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
 
     private var bottomNavigationListener: BottomNavigationListener? = null
 
+    private var isUpdate: Boolean = false
+
     private val currentMarker by lazy {
         createMarker()
     }
@@ -67,6 +72,18 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
     private val allDiaryAdapter by lazy {
         PlaceDiaryAdapter { diaryId ->
             navigateToDetail(diaryId)
+        }
+    }
+
+    private val requestLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult(),
+    ) { result: ActivityResult ->
+        if (result.resultCode == RESULT_OK) {
+            isUpdate = true
+            viewModel.getPlaceInfo(
+                currentLatLng.longitude.toString(),
+                currentLatLng.latitude.toString(),
+            )
         }
     }
 
@@ -120,14 +137,26 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
             binding.placeInfo = it
             ourDiaryAdapter.submitList(it.coupleDiaries)
             allDiaryAdapter.submitList(it.allDiaries)
-            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-            currentMarker.position = currentLatLng
-            currentMarker.map = naverMap
+            setBottomSheetBehaviorState()
+            setCurrentMarker()
         }
 
         viewModel.event.observe(viewLifecycleOwner) {
             handleEvent(it)
         }
+    }
+
+    private fun setBottomSheetBehaviorState() {
+        if (isUpdate) {
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        } else {
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        }
+    }
+
+    private fun setCurrentMarker() {
+        currentMarker.position = currentLatLng
+        currentMarker.map = naverMap
     }
 
     private fun handleEvent(event: HomeViewModel.HomeEvent) {
@@ -219,6 +248,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         this.setOnMapClickListener { _, latLng ->
             currentLatLng = latLng
             viewModel.getPlaceInfo(latLng.longitude.toString(), latLng.latitude.toString())
+            isUpdate = false
             setCameraPosition(latLng)
         }
     }
@@ -245,7 +275,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun navigateToEditor() {
-        startActivity(
+        requestLauncher.launch(
             DiaryEditorActivity.newIntent(
                 requireActivity(),
                 CoordinateUiModel(
