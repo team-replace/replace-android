@@ -95,6 +95,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         setBottomSheet()
         setListener()
         setAdapter()
+        setDiaryTitle()
     }
 
     private fun setMap() {
@@ -195,6 +196,11 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
     private fun setAdapter() {
         bottomSheetBinding.viewCoupleDiaries.rvDiary.adapter = ourDiaryAdapter
         bottomSheetBinding.viewAllDiaries.rvDiary.adapter = allDiaryAdapter
+    }
+
+    private fun setDiaryTitle() {
+        bottomSheetBinding.viewCoupleDiaries.tvDiaryTitle.setText(DiaryTitle.Our.title)
+        bottomSheetBinding.viewAllDiaries.tvDiaryTitle.setText(DiaryTitle.All.title)
     }
 
     override fun onMapReady(naverMap: NaverMap) {
