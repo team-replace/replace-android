@@ -7,7 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.replace.ui.common.SingleLiveEvent
+import com.app.replace.ui.common.mapper.toData
 import com.app.replace.ui.common.processAndAdjustImage
+import com.app.replace.ui.model.CoordinateUiModel
 import com.app.replace.ui.model.DiaryDetailUiModel
 import com.replace.data.common.CustomThrowable
 import com.replace.data.common.FetchState
@@ -55,7 +57,7 @@ class DiaryEditorViewModel @Inject constructor(
         _galleryImages.value = images.toList()
     }
 
-    fun saveDiary(title: String, content: String, shareScope: String) {
+    fun saveDiary(title: String, content: String, shareScope: String, coordinateUiModel: CoordinateUiModel) {
         viewModelScope.launch {
             when (
                 val response = diaryRepository.saveDiary(
@@ -63,6 +65,7 @@ class DiaryEditorViewModel @Inject constructor(
                     title,
                     content,
                     shareScope,
+                    coordinateUiModel.toData(),
                 )
             ) {
                 is CustomResult.Success -> {

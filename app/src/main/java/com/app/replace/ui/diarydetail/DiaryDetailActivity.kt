@@ -76,6 +76,7 @@ class DiaryDetailActivity : AppCompatActivity() {
             }
 
             android.R.id.home -> {
+                setResult(RESULT_OK)
                 finish()
                 true
             }

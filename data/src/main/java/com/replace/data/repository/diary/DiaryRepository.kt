@@ -1,5 +1,6 @@
 package com.replace.data.repository.diary
 
+import com.replace.data.model.CoordinateDataModel
 import com.replace.data.model.response.DiariesResponse
 import com.replace.data.model.response.DiaryDetailResponse
 import com.replace.data.model.response.DiaryEditorImageResponse
@@ -13,6 +14,7 @@ interface DiaryRepository {
         title: String,
         content: String,
         shareScope: String,
+        coordinate: CoordinateDataModel,
     ): CustomResult<Unit>
 
     suspend fun saveDiaryImages(
