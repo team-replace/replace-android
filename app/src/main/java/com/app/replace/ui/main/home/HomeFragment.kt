@@ -28,6 +28,7 @@ import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.overlay.Overlay
 import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,6 +51,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
     private var bottomNavigationListener: BottomNavigationListener? = null
 
     private var isUpdate: Boolean = false
+    private var isMarkerClick: Boolean = false
 
     private val currentMarker by lazy {
         createMarker()
@@ -139,7 +141,9 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
             ourDiaryAdapter.submitList(it.coupleDiaries)
             allDiaryAdapter.submitList(it.allDiaries)
             setBottomSheetBehaviorState()
-            setCurrentMarker()
+            if (!isMarkerClick) {
+                setCurrentMarker()
+            }
         }
 
         viewModel.event.observe(viewLifecycleOwner) {
@@ -256,6 +260,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
     private fun NaverMap.onMapClick() {
         this.setOnMapClickListener { _, latLng ->
             currentLatLng = latLng
+            isMarkerClick = false
             viewModel.getPlaceInfo(latLng.longitude.toString(), latLng.latitude.toString())
             isUpdate = false
             setCameraPosition(latLng)
@@ -269,11 +274,22 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
 
     private fun setDiariesMarker(diaryCoordinates: List<CoordinateUiModel>) {
         val markers = arrayOfNulls<Marker>(diaryCoordinates.size)
-        diaryCoordinates.forEachIndexed { index, it ->
+        diaryCoordinates.forEachIndexed { index, coordinate ->
             markers[index] = Marker()
-            markers[index]?.icon = OverlayImage.fromResource(R.drawable.ic_diary_marker)
-            markers[index]?.position = LatLng(it.latitude.toDouble(), it.longitude.toDouble())
-            markers[index]?.map = naverMap
+            configureMarker(markers[index], coordinate)
+        }
+    }
+
+    private fun configureMarker(marker: Marker?, coordinate: CoordinateUiModel) {
+        marker?.icon = OverlayImage.fromResource(R.drawable.ic_diary_marker)
+        marker?.position = LatLng(coordinate.latitude.toDouble(), coordinate.longitude.toDouble())
+        marker?.map = naverMap
+        marker?.isIconPerspectiveEnabled = true
+        marker?.onClickListener = Overlay.OnClickListener {
+            isMarkerClick = true
+            currentMarker.map = null
+            viewModel.getPlaceInfo(coordinate.longitude, coordinate.latitude)
+            true
         }
     }
 
@@ -281,6 +297,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         val marker = Marker()
         marker.map = null
         marker.icon = OverlayImage.fromResource(R.drawable.ic_place_marker)
+        marker.isIconPerspectiveEnabled = true
         return marker
     }
 
